@@ -1,0 +1,20 @@
+{
+  "bo_position": "职位",
+  "bo_position_code": "编码",
+  "bo_position_name": "名称",
+  "bo_position_activated": "激活",
+  "bo_position_docentry": "对象编号",
+  "bo_position_objectcode": "对象类型",
+  "bo_position_createdate": "创建日期",
+  "bo_position_createtime": "创建时间",
+  "bo_position_updatedate": "修改日期",
+  "bo_position_updatetime": "修改时间",
+  "bo_position_loginst": "实例号（版本）",
+  "bo_position_series": "服务系列",
+  "bo_position_datasource": "数据源",
+  "bo_position_createusersign": "创建用户",
+  "bo_position_updateusersign": "修改用户",
+  "bo_position_createactionid": "创建动作标识",
+  "bo_position_updateactionid": "更新动作标识",
+  "bo_position_closing_delimiter": "----结束----"
+}
