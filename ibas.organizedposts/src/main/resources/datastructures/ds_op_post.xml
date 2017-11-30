@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Domain Name="OrganizedPosts" ShortName="OP">
+  <Model Name="Post" Description="岗位" ModelType="Simple" Mapped="${Company}_OP_POST">
+    <Property Name="PostCode" Description="岗位编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="PostCode"/>
+    <Property Name="PostName" Description="岗位名称" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="PostName"/>
+    <Property Name="Belonging" Description="上级岗位" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Belonging"/>
+    <Property Name="Position" Description="职位" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Position"/>
+    <Property Name="UserCode" Description="用户" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="UserCode"/>
+    <Property Name="ValidDate" Description="生效日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="ValidDate"/>
+    <Property Name="InvalidDate" Description="失效日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="InvalidDate"/>
+    <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+  </Model>
+  <BusinessObject MappedModel="Post" ShortName="${Company}_OP_POST">
+    <RelatedBO Relation="OneToOne" MappedModel="Post"/>
+  </BusinessObject>
+</Domain>
