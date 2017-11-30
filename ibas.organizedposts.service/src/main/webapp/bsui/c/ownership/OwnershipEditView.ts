@@ -73,7 +73,7 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
                     path: "/objectKey"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_objectcode") }),
-                new sap.ibas.Input("", {
+                new sap.m.Input("", {
                     enabled: false,
                     type: sap.m.InputType.Text
                 }).bindProperty("value", {
