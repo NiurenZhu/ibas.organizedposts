@@ -32,7 +32,7 @@ public class Ownership extends BusinessObject<Ownership> implements IOwnership {
     /**
     * 数据库表
     */
-    public static final String DB_TABLE_NAME = "${Company}_OP_OWNERSHIP";
+    public static final String DB_TABLE_NAME = "${Company}_OP_OWNR";
 
     /**
     * 业务对象编码
