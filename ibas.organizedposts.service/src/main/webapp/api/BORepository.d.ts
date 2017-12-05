@@ -8,12 +8,13 @@
 
 import {
     FetchCaller,
-    SaveCaller
+    SaveCaller,
+    IBORepositoryApplication
 } from "ibas/index";
 import * as bo from "./bo/index"
 
 /** 业务仓库 */
-export interface IBORepositoryOrganizedPosts {
+export interface IBORepositoryOrganizedPosts extends IBORepositoryApplication {
 
     /**
      * 查询 数据权限
