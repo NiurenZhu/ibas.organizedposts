@@ -118,7 +118,7 @@ export class PostListApp extends ibas.BOListApplication<IPostListView, bo.Post> 
         app.run(data);
     }
     /** 删除数据，参数：目标数据集合 */
-    protected deleteData(data: bo.Post): void {
+    protected deleteData(data: bo.Post | bo.Post[]): void {
         // 检查目标数据
         if (ibas.objects.isNull(data)) {
             this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -129,11 +129,12 @@ export class PostListApp extends ibas.BOListApplication<IPostListView, bo.Post> 
         let beDeleteds: ibas.ArrayList<bo.Post> = new ibas.ArrayList<bo.Post>();
         if (data instanceof Array) {
             for (let item of data) {
-                if (ibas.objects.instanceOf(item, bo.Post)) {
-                    item.delete();
-                    beDeleteds.add(item);
-                }
+                item.delete();
+                beDeleteds.add(item);
             }
+        } else {
+            data.delete();
+            beDeleteds.add(data);
         }
         // 没有选择删除的对象
         if (beDeleteds.length === 0) {

@@ -109,7 +109,7 @@ export class PositionListApp extends ibas.BOListApplication<IPositionListView, b
         app.run(data);
     }
     /** 删除数据，参数：目标数据集合 */
-    protected deleteData(data: bo.Position): void {
+    protected deleteData(data: bo.Position | bo.Position[]): void {
         // 检查目标数据
         if (ibas.objects.isNull(data)) {
             this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -117,14 +117,15 @@ export class PositionListApp extends ibas.BOListApplication<IPositionListView, b
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.Position> = new ibas.ArrayList<bo.Position>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.Position> = new ibas.ArrayList<bo.Position>();
+        if (data instanceof Array) {
             for (let item of data) {
-                if (ibas.objects.instanceOf(item, bo.Position)) {
-                    item.delete();
-                    beDeleteds.add(item);
-                }
+                item.delete();
+                beDeleteds.add(item);
             }
+        } else {
+            data.delete();
+            beDeleteds.add(data);
         }
         // 没有选择删除的对象
         if (beDeleteds.length === 0) {
@@ -140,7 +141,7 @@ export class PositionListApp extends ibas.BOListApplication<IPositionListView, b
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryOrganizedPosts = new BORepositoryOrganizedPosts();
-                        let saveMethod: Function = function(beSaved: bo.Position):void {
+                        let saveMethod: Function = function (beSaved: bo.Position): void {
                             boRepository.savePosition({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.Position>): void {
@@ -156,7 +157,7 @@ export class PositionListApp extends ibas.BOListApplication<IPositionListView, b
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,
