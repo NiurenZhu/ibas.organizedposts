@@ -32,7 +32,7 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
     darw(): any {
         let that: this = this;
         this.table = new sap.ui.table.TreeTable("", {
-            extension: new sap.m.Toolbar("", {
+            toolbar: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.ToolbarSpacer("", {}),
                     new sap.m.Label("", {
@@ -59,8 +59,8 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
             }),
             expandFirstLevel: true,
             enableSelectAll: false,
-            rowActionCount: 2,
             selectionBehavior: sap.ui.table.SelectionBehavior.Row,
+            rowActionCount: 2,
             selectionMode: sap.ui.table.SelectionMode.Single,
             visibleRowCount: sap.ui.table.VisibleRowCountMode.Auto,
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
