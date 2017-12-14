@@ -30,7 +30,7 @@ public class OwnershipItem extends BusinessObject<OwnershipItem> implements IOwn
     /**
     * 数据库表
     */
-    public static final String DB_TABLE_NAME = "${Company}_OP_OWNERSHIP1";
+    public static final String DB_TABLE_NAME = "${Company}_OP_WNR1";
 
     /**
     * 业务对象编码
