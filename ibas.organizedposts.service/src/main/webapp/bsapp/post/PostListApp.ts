@@ -72,6 +72,9 @@ export class PostListApp extends ibas.BOListApplication<IPostListView, bo.Post> 
                     if (!that.isViewShowed()) {
                         that.show();
                     }
+                    if (opRslt.resultObjects.length === 0) {
+                        that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
+                    }
                     that.view.showData(opRslt.resultObjects);
                     that.busy(false);
                 } catch (error) {
