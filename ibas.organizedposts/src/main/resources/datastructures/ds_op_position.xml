@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!DOCTYPE Domain>
 <Domain Name="OrganizedPosts" ShortName="OP">
   <Model Name="Position" Description="职位" ModelType="MasterData" Mapped="${Company}_OP_PSTN">
     <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Code" UniqueKey="Yes"/>
