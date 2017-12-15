@@ -38,7 +38,7 @@ export class PostListApp extends ibas.BOListApplication<IPostListView, bo.Post> 
         this.view.deleteDataEvent = this.deleteData;
     }
     /** 启动应用 */
-    run(...args: any[]): void {
+    run(): void {
         let criteria: ibas.ICriteria = arguments[0];
         if (ibas.objects.isNull(criteria)) {
             criteria = new ibas.Criteria();

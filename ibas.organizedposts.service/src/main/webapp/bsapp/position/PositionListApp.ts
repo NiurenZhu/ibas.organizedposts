@@ -38,7 +38,7 @@ export class PositionListApp extends ibas.BOListApplication<IPositionListView, b
         this.view.deleteDataEvent = this.deleteData;
     }
     /** 启动应用 */
-    run(...args: any[]): void {
+    run(): void {
         let criteria: ibas.ICriteria = arguments[0];
         if (ibas.objects.instanceOf(criteria, ibas.Criteria)) {
             // 传入了查询，则使用

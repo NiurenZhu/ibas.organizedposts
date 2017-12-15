@@ -46,12 +46,14 @@ export class PositionViewApp extends ibas.BOViewService<IPositionViewView> {
         app.run(this.viewData);
     }
     /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
-        if (arguments[0] instanceof bo.Position) {
+    run(): void;
+    run(data: bo.Position): void;
+    run(): void {
+        if (!(arguments[0] instanceof bo.Position)) {
             this.viewData = arguments[0];
             this.show();
         } else {
-            super.run.apply(this, args);
+            super.run.apply(this, arguments);
         }
     }
     private viewData: bo.Position;
@@ -101,7 +103,7 @@ export class PositionLinkServiceMapping extends ibas.BOLinkServiceMapping {
         this.description = ibas.i18n.prop(this.name);
     }
     /** 创建服务并运行 */
-    create(): ibas.IService<ibas.IServiceContract> {
+    create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new PositionViewApp();
     }
 }

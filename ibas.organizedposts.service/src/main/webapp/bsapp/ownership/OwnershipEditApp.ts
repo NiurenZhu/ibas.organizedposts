@@ -51,7 +51,9 @@ export class OwnershipEditApp extends ibas.BOEditApplication<IOwnershipEditView,
         this.view.showOwnershipItems(this.editData.ownershipItems.filterDeleted());
     }
     /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
+    run(): void;
+    run(data: bo.Ownership): void;
+    run(): void {
         let that: this = this;
         if (ibas.objects.instanceOf(arguments[0], bo.Ownership)) {
             // 尝试重新查询编辑对象
@@ -86,7 +88,7 @@ export class OwnershipEditApp extends ibas.BOEditApplication<IOwnershipEditView,
                 return;
             }
         }
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
     /** 待编辑的数据 */
     protected editData: bo.Ownership;
