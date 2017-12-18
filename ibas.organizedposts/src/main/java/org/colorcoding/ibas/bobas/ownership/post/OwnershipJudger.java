@@ -1,9 +1,16 @@
 package org.colorcoding.ibas.bobas.ownership.post;
 
-import org.colorcoding.ibas.bobas.common.*;
-import org.colorcoding.ibas.bobas.core.Daemon;
-import org.colorcoding.ibas.bobas.core.IDaemonTask;
-import org.colorcoding.ibas.bobas.core.InvalidDaemonTaskException;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Consumer;
+
+import org.colorcoding.ibas.bobas.common.ConditionRelationship;
+import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.ICondition;
+import org.colorcoding.ibas.bobas.common.ICriteria;
+import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
@@ -24,16 +31,14 @@ import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringType;
 import org.colorcoding.ibas.organizedposts.MyConfiguration;
-import org.colorcoding.ibas.organizedposts.bo.ownership.*;
+import org.colorcoding.ibas.organizedposts.bo.ownership.IOwnership;
+import org.colorcoding.ibas.organizedposts.bo.ownership.IOwnershipItem;
+import org.colorcoding.ibas.organizedposts.bo.ownership.IOwnershipItems;
+import org.colorcoding.ibas.organizedposts.bo.ownership.Ownership;
+import org.colorcoding.ibas.organizedposts.bo.ownership.OwnershipItem;
 import org.colorcoding.ibas.organizedposts.data.emOwnershipSign;
 import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts;
 import org.colorcoding.ibas.organizedposts.repository.IBORepositoryOrganizedPostsApp;
-
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * 权限裁判
@@ -90,8 +95,10 @@ public class OwnershipJudger implements IOwnershipJudger {
 	/**
 	 * 获取所有权配置
 	 *
-	 * @param boCode 业务对象
-	 * @param user   用户编码
+	 * @param boCode
+	 *            业务对象
+	 * @param user
+	 *            用户编码
 	 * @return
 	 */
 	protected IOwnership getOwnership(String boCode, String user) {
@@ -115,8 +122,8 @@ public class OwnershipJudger implements IOwnershipJudger {
 		IBORepositoryOrganizedPostsApp boRepository = this.createRepository();
 		IOperationResult<?> operationResult = boRepository.fetchOwnership(criteria);
 		IOwnership ownership = (IOwnership) operationResult.getResultObjects().firstOrDefault();
-		if (ownership == null) { //优先取BO此User个性权限
-			condition.setValue("");    //若取不到,取该BO通用权限
+		if (ownership == null) { // 优先取BO此User个性权限
+			condition.setValue(""); // 若取不到,取该BO通用权限
 			operationResult = boRepository.fetchOwnership(criteria);
 			ownership = (IOwnership) operationResult.getResultObjects().firstOrDefault();
 		}
@@ -129,8 +136,10 @@ public class OwnershipJudger implements IOwnershipJudger {
 	/**
 	 * 获取所有权配置
 	 *
-	 * @param boCode    业务对象
-	 * @param positions 职位数组
+	 * @param boCode
+	 *            业务对象
+	 * @param positions
+	 *            职位数组
 	 * @return
 	 */
 	protected IBOFiltering[] getBOFilterings(String boCode, String[] positions) {
@@ -175,13 +184,13 @@ public class OwnershipJudger implements IOwnershipJudger {
 			}
 			IBORepositoryOrganizedPostsApp boRepository = this.createRepository();
 			IOperationResult<?> operationResult = boRepository.fetchBOFiltering(criteria);
-			for (IBOFiltering filtering : operationResult.getResultObjects().toArray(new IBOFiltering[]{})) {
+			for (IBOFiltering filtering : operationResult.getResultObjects().toArray(new IBOFiltering[] {})) {
 				String key = String.format("%s/%s", filtering.getBOCode(), filtering.getRoleCode());
 				boFilterings.put(key, filtering);// 缓存数据
 				filterings.add(filtering);// 返回数据
 			}
 		}
-		return filterings.toArray(new IBOFiltering[]{});
+		return filterings.toArray(new IBOFiltering[] {});
 	}
 
 	/**
@@ -189,8 +198,10 @@ public class OwnershipJudger implements IOwnershipJudger {
 	 * <p>
 	 * 注意，配置的条件中，任意一个不满足则不满足
 	 *
-	 * @param bo        数据
-	 * @param positions 职位
+	 * @param bo
+	 *            数据
+	 * @param positions
+	 *            职位
 	 * @return true, 被过滤；false,未被过滤
 	 */
 	protected boolean filtering(IDataOwnership bo, String[] positions) {
@@ -210,7 +221,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 							// 匹配到可见
 							availableMatched = true;
 						} else if (filtering.getFilteringType() == emFilteringType.UNAVAILABLE) {
-							//  匹配到不可见
+							// 匹配到不可见
 							unavailableMatched = true;
 						}
 					} else {
@@ -219,7 +230,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 							// 匹配到不可见
 							unavailableMatched = true;
 						} else if (filtering.getFilteringType() == emFilteringType.UNAVAILABLE) {
-							//  匹配到可见
+							// 匹配到可见
 							availableMatched = true;
 						}
 						roleCode = filtering.getRoleCode();
@@ -325,17 +336,20 @@ public class OwnershipJudger implements IOwnershipJudger {
 					authorise = ownership.getDefaultPermission(); // 获取默认权限
 					int currentPriority = Integer.MIN_VALUE;
 					for (IOwnershipItem ownershipItem : ownershipItems) {
-						if (currentPriority == ownershipItem.getPriority()
-								&& authorise == emAuthoriseType.ALL
+						if (currentPriority == ownershipItem.getPriority() && authorise == emAuthoriseType.ALL
 								&& this.isRoleDataFirstAvailable()) {
-							Logger.log(MessageLevel.INFO, MSG_OWNERSHIP_JUDGER_SKIP, ownershipItem.getItemSign(), ownershipItem.getItemDescription());
-							continue; //已取得最大权限,当前优先级不需再继续判断
+							Logger.log(MessageLevel.INFO, MSG_OWNERSHIP_JUDGER_SKIP, ownershipItem.getItemSign(),
+									ownershipItem.getItemDescription());
+							continue; // 已取得最大权限,当前优先级不需再继续判断
 						}
-						IMatchingStrategy matchingStrategy = MatchingStrategyFactory.create().createMatchingStrategy(ownershipItem.getItemSign());
-						matchingStrategy.setParameter(ownershipItem.getParameter()); //设置参数
-						Logger.log(MessageLevel.INFO, MSG_OWNERSHIP_JUDGER_JUDGING, matchingStrategy.getClass().getName(), ownershipItem.getPriority());
+						IMatchingStrategy matchingStrategy = MatchingStrategyFactory.create()
+								.createMatchingStrategy(ownershipItem.getItemSign());
+						matchingStrategy.setParameter(ownershipItem.getParameter()); // 设置参数
+						Logger.log(MessageLevel.INFO, MSG_OWNERSHIP_JUDGER_JUDGING,
+								matchingStrategy.getClass().getName(), ownershipItem.getPriority());
 						boolean done = matchingStrategy.match(bo, user);
-						Logger.log(MessageLevel.INFO, MSG_OWNERSHIP_JUDGER_JUDGED, matchingStrategy.getClass().getName(), done);
+						Logger.log(MessageLevel.INFO, MSG_OWNERSHIP_JUDGER_JUDGED,
+								matchingStrategy.getClass().getName(), done);
 						if (done) {
 							if (currentPriority == ownershipItem.getPriority()) {
 								authorise = computeAuthoriseSet(authorise, ownershipItem.getPermission());
@@ -372,7 +386,8 @@ public class OwnershipJudger implements IOwnershipJudger {
 			@Override
 			public void accept(IOwnershipItem ownershipItem) {
 				// 更新优先级
-				IMatchingStrategy matchingStrategy = MatchingStrategyFactory.create().createMatchingStrategy(ownershipItem.getItemSign());
+				IMatchingStrategy matchingStrategy = MatchingStrategyFactory.create()
+						.createMatchingStrategy(ownershipItem.getItemSign());
 				if (ownershipItem.getPriority() == 0) {
 					ownershipItem.setPriority(matchingStrategy.getPriority());
 				}

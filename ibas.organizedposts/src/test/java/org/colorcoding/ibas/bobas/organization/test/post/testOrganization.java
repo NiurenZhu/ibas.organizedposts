@@ -1,6 +1,5 @@
 package org.colorcoding.ibas.bobas.organization.test.post;
 
-import junit.framework.TestCase;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.DateTime;
@@ -16,6 +15,8 @@ import org.colorcoding.ibas.organizedposts.bo.post.IPost;
 import org.colorcoding.ibas.organizedposts.bo.post.Post;
 import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts;
 
+import junit.framework.TestCase;
+
 public class testOrganization extends TestCase {
 
 	protected BORepositoryOrganizedPosts boRepository;
@@ -30,12 +31,13 @@ public class testOrganization extends TestCase {
 			this.initialize();
 			// 开始测试
 			// 多次测试后可清空数据
-			// DELETE  FROM "CC_OP_POST" WHERE "PostCode" like 'PT%';
-			// DELETE  FROM "CC_OP_PSTN" WHERE "Code" like 'PS%';
-			// DELETE  FROM "CC_SYS_USER" WHERE "Code" like 'UR%';
+			// DELETE FROM "CC_OP_POST" WHERE "PostCode" like 'PT%';
+			// DELETE FROM "CC_OP_PSTN" WHERE "Code" like 'PS%';
+			// DELETE FROM "CC_SYS_USER" WHERE "Code" like 'UR%';
 			OrganizationManager orgManager = (OrganizationManager) OrganizationFactory.create().createManager();
 			orgManager.initialize(true);// 已缓存，重新加载组织
-			String[] roles = orgManager.getRoles(org.colorcoding.ibas.initialfantasy.bo.shell.User.create(this.users[10]));
+			String[] roles = orgManager
+					.getRoles(org.colorcoding.ibas.initialfantasy.bo.shell.User.create(this.users[10]));
 			assertEquals("他只有一个角色", roles.length, 1);
 			assertEquals("他的角色是开发工程师", roles[0], String.format("PS%06d", tmpCode + 7));
 			OrganizationalRelationship relationship = orgManager.getRelationship(
@@ -90,7 +92,7 @@ public class testOrganization extends TestCase {
 	 */
 	protected void initializePositions() throws Exception {
 		this.positions = new IPosition[9];
-		String[] positionNames = {"CEO", "经理", "会计", "人事专员", "行政助理", "思博总经理", "团队负责人", "开发工程师", "实施顾问"};
+		String[] positionNames = { "CEO", "经理", "会计", "人事专员", "行政助理", "思博总经理", "团队负责人", "开发工程师", "实施顾问" };
 		IOperationResult<IPosition> operationResult = null;
 		for (int i = 0; i < 9; i++) {
 			IPosition position = new Position();
@@ -107,15 +109,15 @@ public class testOrganization extends TestCase {
 	 */
 	protected void initializePosts() throws Exception {
 		IOperationResult<IPost> operationResult = null;
-		//#region 	公司
+		// #region 公司
 		IPost post = new Post();
 		post.setBelonging(-1);
 		post.setPostCode(String.format("PT%06d", tmpCode + 0));
 		post.setPostName("老板");
 		post.setPosition(this.positions[0].getCode()); // CEO
 		post.setUserCode(this.users[0].getCode());
-		//#endregion
-		//#region 	****财务部
+		// #endregion
+		// #region ****财务部
 		IPost post1 = post.getPosts().create();
 		post1.setPostCode(String.format("PT%06d", tmpCode + 1));
 		post1.setPostName("财务经理");
@@ -133,8 +135,8 @@ public class testOrganization extends TestCase {
 		post3.setPostName("会计-费用报销");
 		post3.setPosition(this.positions[2].getCode()); // 会计
 		post3.setUserCode(this.users[3].getCode());
-		//#endregion
-		//#region 	****人事部
+		// #endregion
+		// #region ****人事部
 		IPost post4 = post.getPosts().create();
 		post4.setPostCode(String.format("PT%06d", tmpCode + 4));
 		post4.setPostName("人事经理");
@@ -158,15 +160,15 @@ public class testOrganization extends TestCase {
 		post7.setPostName("行政助理");
 		post7.setPosition(this.positions[4].getCode()); // 行政助理
 		post7.setUserCode(this.users[7].getCode());
-		//#endregion
-		//#region 	****思博分公司
+		// #endregion
+		// #region ****思博分公司
 		IPost post8 = post.getPosts().create();
 		post8.setPostCode(String.format("PT%06d", tmpCode + 8));
 		post8.setPostName("思博总经理");
 		post8.setPosition(this.positions[5].getCode()); // 思博总经理
 		post8.setUserCode(this.users[8].getCode());
-		//#endregion
-		//#region 	********阿米巴团队01
+		// #endregion
+		// #region ********阿米巴团队01
 		IPost post9 = post8.getPosts().create();
 		post9.setPostCode(String.format("PT%06d", tmpCode + 9));
 		post9.setPostName("阿米巴01负责人");
@@ -190,8 +192,8 @@ public class testOrganization extends TestCase {
 		post12.setPostName("开发工程师-.Net");
 		post12.setPosition(this.positions[7].getCode()); // 开发工程师
 		post12.setUserCode(this.users[12].getCode());
-		//#endregion
-		//#region 	********阿米巴团队02
+		// #endregion
+		// #region ********阿米巴团队02
 		IPost post13 = post8.getPosts().create();
 		post13.setPostCode(String.format("PT%06d", tmpCode + 13));
 		post13.setPostName("阿米巴02负责人");
@@ -215,8 +217,8 @@ public class testOrganization extends TestCase {
 		post16.setPostName("开发工程师-Java");
 		post16.setPosition(this.positions[7].getCode()); // 开发工程师
 		post16.setUserCode(this.users[16].getCode());
-		//#endregion
-		//#region 	********阿米巴团队03
+		// #endregion
+		// #region ********阿米巴团队03
 		IPost post17 = post8.getPosts().create();
 		post17.setPostCode(String.format("PT%06d", tmpCode + 17));
 		post17.setPostName("阿米巴03负责人");
@@ -234,7 +236,7 @@ public class testOrganization extends TestCase {
 		post19.setPostName("实施顾问");
 		post19.setPosition(this.positions[8].getCode()); // 实施顾问
 		post19.setUserCode(this.users[19].getCode());
-		//#endregion
+		// #endregion
 		post.setValidDate(DateTime.getToday());
 		post.setInvalidDate(DateTime.maxValue);
 		operationResult = boRepository.savePost(post);

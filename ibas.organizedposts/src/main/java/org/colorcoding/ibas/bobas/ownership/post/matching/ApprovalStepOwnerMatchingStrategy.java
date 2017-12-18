@@ -1,13 +1,16 @@
 package org.colorcoding.ibas.bobas.ownership.post.matching;
 
-import org.colorcoding.ibas.bobas.approval.*;
+import org.colorcoding.ibas.bobas.approval.ApprovalFactory;
+import org.colorcoding.ibas.bobas.approval.IApprovalData;
+import org.colorcoding.ibas.bobas.approval.IApprovalProcess;
+import org.colorcoding.ibas.bobas.approval.IApprovalProcessManager;
+import org.colorcoding.ibas.bobas.approval.IApprovalProcessStep;
 import org.colorcoding.ibas.bobas.core.IBORepository;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts;
-import org.colorcoding.ibas.organizedposts.repository.IBORepositoryOrganizedPostsApp;
 
 public class ApprovalStepOwnerMatchingStrategy extends BasisMatchingStrategy {
 	/**
@@ -25,9 +28,9 @@ public class ApprovalStepOwnerMatchingStrategy extends BasisMatchingStrategy {
 		}
 		IApprovalProcessManager apManager = ApprovalFactory.create().createManager();
 		IApprovalProcess approvalProcess = apManager.checkProcess((IApprovalData) bo, this.createRepository());
-		if(approvalProcess != null){
-			for(IApprovalProcessStep approvalProcessStep: approvalProcess.getProcessSteps()){
-				if(approvalProcessStep.getOwner().getId() == user.getId()){
+		if (approvalProcess != null) {
+			for (IApprovalProcessStep approvalProcessStep : approvalProcess.getProcessSteps()) {
+				if (approvalProcessStep.getOwner().getId() == user.getId()) {
 					return true;
 				}
 			}
