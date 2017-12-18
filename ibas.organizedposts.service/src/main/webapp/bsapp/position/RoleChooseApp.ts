@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { BO_CODE_ROLE } from "../../3rdparty/initialfantasy/index";
+import { BO_CODE_ROLE, IRole } from "../../3rdparty/initialfantasy/index";
 import { PositionChooseApp } from "./PositionChooseApp";
 
 /** 角色选择服务（用职位实现） */
@@ -39,7 +39,7 @@ export class RoleChooseServiceMapping extends ibas.BOChooseServiceMapping {
         this.description = ibas.i18n.prop(this.name);
     }
     /** 创建服务并运行 */
-    create(): ibas.IService<ibas.IServiceCaller> {
+    create(): ibas.IBOChooseService<IRole> {
         return new RoleChooseApp();
     }
 }
