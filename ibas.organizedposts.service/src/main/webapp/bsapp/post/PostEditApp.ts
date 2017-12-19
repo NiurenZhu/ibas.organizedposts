@@ -8,7 +8,7 @@
 
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
-import { IUser, BO_CODE_USER } from "../../3rdparty/initialfantasy/index";
+import { IUser, BO_CODE_USER } from "3rdparty/initialfantasy/index";
 import { BORepositoryOrganizedPosts } from "../../borep/BORepositories";
 
 /** 编辑应用-岗位 */

@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { BO_CODE_ROLE, IRole } from "../../3rdparty/initialfantasy/index";
+import { BO_CODE_ROLE, IRole } from "3rdparty/initialfantasy/index";
 import { PositionChooseApp } from "./PositionChooseApp";
 
 /** 角色选择服务（用职位实现） */
