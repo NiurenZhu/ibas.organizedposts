@@ -26,7 +26,7 @@ export class PositionEditView extends ibas.BOEditView implements IPositionEditVi
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true, // 编辑模式影响行高
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_basis_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_general_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_position_code") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Text
