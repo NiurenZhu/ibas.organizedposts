@@ -19,7 +19,8 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
-    strings
+    strings,
+    config
 } from "ibas/index";
 import {
     IPost,
@@ -271,7 +272,7 @@ export class Post extends BOSimple<Post> implements IPost {
     /** 初始化数据 */
     protected init(): void {
         this.posts = new Posts(this);
-        this.objectCode = Post.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(Post.BUSINESS_OBJECT_CODE);
     }
 }
 

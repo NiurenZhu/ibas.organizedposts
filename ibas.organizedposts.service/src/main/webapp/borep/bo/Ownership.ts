@@ -20,6 +20,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IOwnership,
@@ -241,7 +242,7 @@ export class Ownership extends BOSimple<Ownership> implements IOwnership {
     /** 初始化数据 */
     protected init(): void {
         this.ownershipItems = new OwnershipItems(this);
-        this.objectCode = Ownership.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(Ownership.BUSINESS_OBJECT_CODE);
         this.activated = emYesNo.YES;
     }
 }

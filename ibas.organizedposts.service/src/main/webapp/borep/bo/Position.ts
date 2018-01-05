@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IPosition,
@@ -214,7 +215,7 @@ export class Position extends BOMasterData<Position> implements IPosition {
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = Position.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(Position.BUSINESS_OBJECT_CODE);
     }
 }
 
