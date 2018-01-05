@@ -24,11 +24,11 @@ export const CONFIG_VALUE_OWNERSHIP_WAY: string = "post";
 /** 业务仓库名称 */
 export const BO_REPOSITORY_ORGANIZEDPOSTS: string = strings.format(MODULE_REPOSITORY_NAME_TEMPLATE, CONSOLE_NAME);
 /** 业务对象编码-数据权限 */
-export const BO_CODE_OWNERSHIP: string = "CC_OP_OWNERSHIP";
+export const BO_CODE_OWNERSHIP: string = "${Company}_OP_OWNERSHIP";
 /** 业务对象编码-职位 */
-export const BO_CODE_POSITION: string = "CC_OP_PSTN";
+export const BO_CODE_POSITION: string = "${Company}_OP_PSTN";
 /** 业务对象编码-岗位 */
-export const BO_CODE_POST: string = "CC_OP_POST";
+export const BO_CODE_POST: string = "${Company}_OP_POST";
 
 /**
  * 所有权标记
