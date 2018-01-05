@@ -272,6 +272,7 @@ export class Post extends BOSimple<Post> implements IPost {
     /** 初始化数据 */
     protected init(): void {
         this.posts = new Posts(this);
+        this.belonging = -1; // 默认为顶级岗位
         this.objectCode = config.applyVariables(Post.BUSINESS_OBJECT_CODE);
     }
 }
