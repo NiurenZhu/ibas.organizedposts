@@ -31,39 +31,48 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
+        this.form = new sap.ui.layout.form.SimpleForm("", {});
+        this.toolbar = new sap.m.Toolbar("", {
+            content: [
+                // new sap.m.ToolbarSpacer("", {}),
+                new sap.m.Label("", {
+                    wrapping: true,
+                    textAlign: "Right",
+                    text: ibas.i18n.prop("bo_post_validdate")
+                }),
+                new sap.m.DatePicker("", {
+                    width: "15%",
+                }).bindProperty("dateValue", {
+                    path: "/Posts/0/validDate",
+                    type: new openui5.datatype.DateTime({
+                        description: ibas.i18n.prop("bo_post_validdate"),
+                    })
+                }),
+                new sap.m.Label("", {
+                    wrapping: true,
+                    textAlign: "Right",
+                    text: ibas.i18n.prop("bo_post_invaliddate")
+                }),
+                new sap.m.DatePicker("", {
+                    width: "15%",
+                }).bindProperty("dateValue", {
+                    path: "/Posts/0/invalidDate",
+                    type: new openui5.datatype.DateTime({
+                        description: ibas.i18n.prop("bo_post_invaliddate")
+                    })
+                }),
+                new sap.m.ToolbarSpacer("", {}),
+            ]
+        });
         this.table = new sap.ui.table.TreeTable("", {
-            toolbar: new sap.m.Toolbar("", {
-                content: [
-                    new sap.m.ToolbarSpacer("", {}),
-                    new sap.m.Label("", {
-                        wrapping: true,
-                        textAlign: "Right",
-                        text: ibas.i18n.prop("bo_post_validdate")
-                    }),
-                    new sap.m.DatePicker("", {
-                        width: "15%",
-                    }).bindProperty("dateValue", {
-                        path: "/Posts/0/validDate"
-                    }),
-                    new sap.m.Label("", {
-                        wrapping: true,
-                        textAlign: "Right",
-                        text: ibas.i18n.prop("bo_post_invaliddate")
-                    }),
-                    new sap.m.DatePicker("", {
-                        width: "15%",
-                    }).bindProperty("dateValue", {
-                        path: "/Posts/0/invalidDate"
-                    }),
-                ]
-            }),
+            toolbar: this.toolbar,
             expandFirstLevel: true,
             enableSelectAll: false,
             selectionBehavior: sap.ui.table.SelectionBehavior.Row,
             rowActionCount: 2,
             selectionMode: sap.ui.table.SelectionMode.Single,
-            visibleRowCount: sap.ui.table.VisibleRowCountMode.Auto,
-            visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
+            visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT, 10),
+            visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Fixed,
             rowActionTemplate: new sap.ui.table.RowAction({
                 items: [
                     new sap.ui.table.RowActionItem({
@@ -112,7 +121,12 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
                     template: new sap.m.Input("", {
                         width: "100%",
                         value: {
-                            path: "postCode"
+                            path: "postCode",
+                            type: new openui5.datatype.Alphanumeric({
+                                description: ibas.i18n.prop("bo_post_postcode"),
+                                notEmpty: true,
+                                maxLength: 8
+                            })
                         },
                     })
                 }),
@@ -130,7 +144,12 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
                     template: new sap.m.Input("", {
                         width: "100%",
                         value: {
-                            path: "position"
+                            path: "position",
+                            type: new openui5.datatype.Alphanumeric({
+                                description: ibas.i18n.prop("bo_post_position"),
+                                notEmpty: true,
+                                maxLength: 8
+                            })
                         },
                         showValueHelp: true,
                         valueHelpOnly: true,
@@ -146,7 +165,12 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
                     template: new sap.m.Input("", {
                         width: "100%",
                         value: {
-                            path: "userCode"
+                            path: "userCode",
+                            type: new openui5.datatype.Alphanumeric({
+                                description: ibas.i18n.prop("bo_post_usercode"),
+                                notEmpty: true,
+                                maxLength: 8
+                            })
                         },
                         showValueHelp: true,
                         valueHelpOnly: true,
@@ -159,6 +183,7 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
                 }),
             ],
         });
+        this.form.addContent(this.table);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -168,6 +193,14 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://save",
                         press: function (): void {
+                            let tableValidateResult: openui5.datatype.ValidateResult =
+                                openui5.utils.validateControlBoundProperty(that.table);
+                            let toolbarValidateResult: openui5.datatype.ValidateResult =
+                                openui5.utils.validateControlBoundProperty(that.toolbar);
+                            if (!(tableValidateResult.status && toolbarValidateResult.status)) {
+                                // alert(validateResult.message);
+                                return;
+                            }
                             that.fireViewEvents(that.saveDataEvent);
                         }
                     }),
@@ -216,13 +249,15 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
                     }),
                 ]
             }),
-            content: [this.table]
+            content: [this.form]
         });
         this.id = this.page.getId();
         return this.page;
     }
     private page: sap.m.Page;
+    private form: sap.ui.layout.form.SimpleForm;
     private table: sap.ui.table.TreeTable;
+    private toolbar: sap.m.Toolbar;
     /** 改变视图状态 */
     private changeViewStatus(data: bo.Post): void {
         if (ibas.objects.isNull(data)) {
@@ -238,22 +273,35 @@ export class PostEditView extends ibas.BOEditView implements IPostEditView {
 
     /** 显示数据 */
     showPost(data: bo.Post): void {
-
-        this.table.setModel(new sap.ui.model.json.JSONModel({ Posts: [data] }));
-        let binding: sap.ui.model.Binding = this.table.getBinding("rows");
-        if (!ibas.objects.isNull(binding)) {
-            if (binding instanceof sap.ui.model.TreeBinding) {
-                binding.filter(
-                    [
-                        new sap.ui.model.Filter("isDeleted", sap.ui.model.FilterOperator.EQ, false)
-                    ],
-                    sap.ui.model.FilterType.Control
-                );
+        let model: sap.ui.model.Model = this.table.getModel(undefined);
+        if (!ibas.objects.isNull(model)) {
+            // 已显示过数据,直接刷新即可
+            model.refresh(false);
+        } else {
+            this.table.setModel(new sap.ui.model.json.JSONModel({ Posts: [data] }));
+            let binding: sap.ui.model.Binding = this.table.getBinding("rows");
+            if (!ibas.objects.isNull(binding)) {
+                if (binding instanceof sap.ui.model.TreeBinding) {
+                    binding.filter(
+                        [
+                            new sap.ui.model.Filter("isDeleted", sap.ui.model.FilterOperator.EQ, false)
+                        ],
+                        sap.ui.model.FilterType.Control
+                    );
+                }
             }
+            // 监听属性改变，并更新控件
+            openui5.utils.refreshModelChanged(this.table, data);
         }
-        // 监听属性改变，并更新控件
-        openui5.utils.refreshModelChanged(this.table, data);
         // 改变视图状态
         this.changeViewStatus(data);
+    }
+
+    /** 刷新页面model */
+    refreshViewModel(): void {
+        let model: sap.ui.model.Model = this.table.getModel(undefined);
+        if (!ibas.objects.isNull(model)) {
+            model.refresh(false);
+        }
     }
 }
