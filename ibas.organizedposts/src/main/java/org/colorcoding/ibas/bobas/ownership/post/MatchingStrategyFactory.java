@@ -33,6 +33,7 @@ public class MatchingStrategyFactory {
                 matchingStrategy = new SubordinateMatchingStrategy();
                 break;
             case OTHERS:
+                matchingStrategy = new OthersMatchingStrategy();
                 break;
             case PROJECT:
                 break;

@@ -6,6 +6,7 @@ import org.colorcoding.ibas.bobas.approval.IApprovalProcess;
 import org.colorcoding.ibas.bobas.approval.IApprovalProcessManager;
 import org.colorcoding.ibas.bobas.approval.IApprovalProcessStep;
 import org.colorcoding.ibas.bobas.core.IBORepository;
+import org.colorcoding.ibas.bobas.data.emApprovalStepStatus;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
@@ -28,9 +29,11 @@ public class ApprovalStepOwnerMatchingStrategy extends BasisMatchingStrategy {
 		}
 		IApprovalProcessManager apManager = ApprovalFactory.create().createManager();
 		IApprovalProcess approvalProcess = apManager.checkProcess((IApprovalData) bo, this.createRepository());
-		if (approvalProcess != null) {
+		if (approvalProcess != null && !approvalProcess.isNew()) {
 			for (IApprovalProcessStep approvalProcessStep : approvalProcess.getProcessSteps()) {
-				if (approvalProcessStep.getOwner().getId() == user.getId()) {
+				if (approvalProcessStep.getOwner().getId() == user.getId()
+						&& approvalProcessStep.getStatus() != emApprovalStepStatus.SKIPPED
+						&& approvalProcessStep.getStatus() != emApprovalStepStatus.PENDING) {
 					return true;
 				}
 			}

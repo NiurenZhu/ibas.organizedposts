@@ -43,7 +43,7 @@
                             WHERE (B.`PlatformId` = platform OR B.`PlatformId` = platform2) AND B.`Activated` = 'Y' AND B.`AuthValue` &lt;&gt; 'N' AND B.`RoleCode` IN (
                                 SELECT `Position`
                                 FROM `${Company}_OP_POST`
-                                WHERE `ValidDate` &lt;= GETDATE() AND `InvalidDate` &gt;= GETDATE() AND `UserCode` = userCode
+                                WHERE `ValidDate` &lt;= NOW() AND `InvalidDate` &gt;= NOW() AND `UserCode` = userCode
                                 )
                         ) C ON A.`ModuleId` = C.`ModuleID`
                         WHERE (A.`PlatformId` = platform OR A.`PlatformId` = platform2) AND A.`Activated` = 'Y';
@@ -99,7 +99,7 @@
                     WHERE T0.`RoleCode` IN (
                         SELECT `Position`
                         FROM `${Company}_OP_POST`
-                        WHERE `ValidDate` &lt;= GETDATE() AND `InvalidDate` &gt;= GETDATE() AND `UserCode` = userCode
+                        WHERE `ValidDate` &lt;= NOW() AND `InvalidDate` &gt;= NOW() AND `UserCode` = userCode
                     );
                 END IF;
               END;
