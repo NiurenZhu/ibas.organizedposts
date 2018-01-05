@@ -244,6 +244,7 @@ export class Ownership extends BOSimple<Ownership> implements IOwnership {
         this.ownershipItems = new OwnershipItems(this);
         this.objectCode = config.applyVariables(Ownership.BUSINESS_OBJECT_CODE);
         this.activated = emYesNo.YES;
+        this.userCode = "";
     }
 }
 
@@ -489,7 +490,7 @@ export class OwnershipItem extends BOSimpleLine<OwnershipItem> implements IOwner
 
     /** 初始化数据 */
     protected init(): void {
-        //
+        this.priority = 0; // 优先级为0,代表未设置
     }
 }
 
