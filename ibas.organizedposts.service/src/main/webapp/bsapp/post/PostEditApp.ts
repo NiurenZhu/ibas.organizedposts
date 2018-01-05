@@ -222,6 +222,7 @@ export class PostEditApp extends ibas.BOEditApplication<IPostEditView, bo.Post> 
             chooseType: ibas.emChooseType.SINGLE,
             onCompleted(selecteds: ibas.List<IUser>): void {
                 item.userCode = selecteds.firstOrDefault().code;
+                that.view.refreshViewModel();
             }
         });
     }
@@ -236,6 +237,7 @@ export class PostEditApp extends ibas.BOEditApplication<IPostEditView, bo.Post> 
             chooseType: ibas.emChooseType.SINGLE,
             onCompleted(selecteds: ibas.List<bo.Position>): void {
                 item.position = selecteds.firstOrDefault().code;
+                that.view.refreshViewModel();
             }
         });
     }
@@ -256,4 +258,6 @@ export interface IPostEditView extends ibas.IBOEditView {
     chooseUserEvent: Function;
     /** 选择职位事件 */
     choosePositionEvent: Function;
+    /** 刷新页面model */
+    refreshViewModel(): void;
 }
