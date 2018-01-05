@@ -289,6 +289,11 @@ export class Posts extends BusinessObjects<Post, Post> implements IPosts {
     /** 父项属性改变时 */
     protected onParentPropertyChanged(name: string): void {
         super.onParentPropertyChanged(name);
+        if (strings.equalsIgnoreCase(name, Post.PROPERTY_OBJECTKEY_NAME)) {
+            for (let item of this) {
+                item.belonging = this.parent.objectKey;
+            }
+        }
         if (strings.equalsIgnoreCase(name, Post.PROPERTY_VALIDDATE_NAME)) {
             for (let item of this) {
                 item.validDate = this.parent.validDate;
@@ -309,6 +314,9 @@ export class Posts extends BusinessObjects<Post, Post> implements IPosts {
      */
     protected afterAdd(item: Post): void {
         super.afterAdd(item);
+        item.belonging = this.parent.objectKey;
+        item.validDate = this.parent.validDate;
+        item.invalidDate = this.parent.invalidDate;
     }
 
     /**
