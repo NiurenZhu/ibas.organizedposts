@@ -1,12 +1,11 @@
 package org.colorcoding.ibas.organizedposts.bo.post;
 
+import java.beans.PropertyChangeEvent;
+
 import org.colorcoding.ibas.bobas.bo.BusinessObjects;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
-import org.colorcoding.ibas.organizedposts.bo.post.IPost;
-
-import java.beans.PropertyChangeEvent;
 
 /**
  * Created by czc on 2017/10/25.
@@ -32,7 +31,8 @@ public class Posts extends BusinessObjects<IPost, IPost> implements IPosts {
 	/**
 	 * 构造方法
 	 *
-	 * @param parent 父项对象
+	 * @param parent
+	 *            父项对象
 	 */
 	public Posts(IPost parent) {
 		super(parent);
@@ -63,7 +63,6 @@ public class Posts extends BusinessObjects<IPost, IPost> implements IPosts {
 	@Override
 	protected void afterAddItem(IPost item) {
 		super.afterAddItem(item);
-		// TODO 设置关联值
 		if (this.getParent() != null) {
 			if (item.getBelonging().equals(0)) {
 				item.setBelonging(this.getParent().getObjectKey());
@@ -83,7 +82,6 @@ public class Posts extends BusinessObjects<IPost, IPost> implements IPosts {
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias("Belonging");
 		condition.setValue(this.getParent().getObjectKey());
-		// TODO 添加关联查询条件
 		return criteria;
 	}
 
@@ -91,7 +89,6 @@ public class Posts extends BusinessObjects<IPost, IPost> implements IPosts {
 	public void onParentPropertyChanged(PropertyChangeEvent evt) {
 		// 此处不能调用父类方法,更新操作时会改变子对象的ObjectKey属性
 		// super.onParentPropertyChanged(evt);
-		// TODO 设置关联值
 		if (evt.getPropertyName().equals(Post.PROPERTY_OBJECTKEY.getName())) {
 			for (IPost item : this) {
 				item.setBelonging(this.getParent().getObjectKey());
