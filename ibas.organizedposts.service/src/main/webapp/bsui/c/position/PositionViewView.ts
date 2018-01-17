@@ -21,7 +21,7 @@ export class PositionViewView extends ibas.BOViewView implements IPositionViewVi
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_general_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_title_general") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_position_code") }),
                 new sap.m.Input("", {
                     enabled: false,
@@ -44,7 +44,7 @@ export class PositionViewView extends ibas.BOViewView implements IPositionViewVi
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_other_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_title_others") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_position_docentry") }),
                 new sap.m.Input("", {
                     enabled: false,

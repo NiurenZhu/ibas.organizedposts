@@ -33,7 +33,7 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true, // 编辑模式影响行高
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_general_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_title_general") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_usercode") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Text,
@@ -64,7 +64,7 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
                     path: "/defaultPermission",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_other_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_title_others") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_objectkey") }),
                 new sap.m.Input("", {
                     enabled: false,
