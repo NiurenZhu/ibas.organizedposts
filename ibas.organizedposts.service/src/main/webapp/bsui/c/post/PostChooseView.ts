@@ -31,7 +31,8 @@ export class PostChooseView extends ibas.BOChooseView implements IPostChooseView
             columns: [
             ]
         });
-        this.id = this.table.getId();
+        // 调整选择样式风格
+        openui5.utils.changeSelectionStyle(this.table, this.chooseType);
         // 添加列表自动查询事件
         openui5.utils.triggerNextResults({
             listener: this.table,
@@ -101,7 +102,7 @@ export class PostChooseView extends ibas.BOChooseView implements IPostChooseView
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }
