@@ -129,8 +129,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                             );
                         }
                     }),
-                ],
-                contentRight: [
+                    new sap.m.ToolbarSpacer(""),
                     new sap.m.Button("", {
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://action",
