@@ -10,7 +10,6 @@ import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryOrganizedPosts } from "../../borep/BORepositories";
 import { DataConverter4op } from "../../borep/DataConverters";
-import { PositionViewApp } from "./PositionViewApp";
 import { PositionEditApp } from "./PositionEditApp";
 
 /** 列表应用-职位 */
@@ -91,11 +90,6 @@ export class PositionListApp extends ibas.BOListApplication<IPositionListView, b
             ));
             return;
         }
-        let app: PositionViewApp = new PositionViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.Position): void {

@@ -32,9 +32,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case ownershipApps.OwnershipChooseApp.APPLICATION_ID:
                 view = new ownershipViews.OwnershipChooseView();
                 break;
-            case ownershipApps.OwnershipViewApp.APPLICATION_ID:
-                view = new ownershipViews.OwnershipViewView();
-                break;
             case ownershipApps.OwnershipEditApp.APPLICATION_ID:
                 view = new ownershipViews.OwnershipEditView();
                 break;
@@ -44,9 +41,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case positionApps.PositionChooseApp.APPLICATION_ID:
                 view = new positionViews.PositionChooseView();
                 break;
-            case positionApps.PositionViewApp.APPLICATION_ID:
-                view = new positionViews.PositionViewView();
-                break;
             case positionApps.PositionEditApp.APPLICATION_ID:
                 view = new positionViews.PositionEditView();
                 break;
@@ -55,9 +49,6 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case postApps.PostChooseApp.APPLICATION_ID:
                 view = new postViews.PostChooseView();
-                break;
-            case postApps.PostViewApp.APPLICATION_ID:
-                view = new postViews.PostViewView();
                 break;
             case postApps.PostEditApp.APPLICATION_ID:
                 view = new postViews.PostEditView();

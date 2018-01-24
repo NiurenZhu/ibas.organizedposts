@@ -10,6 +10,5 @@
 export * from "./PositionFunc";
 export * from "./PositionListApp";
 export * from "./PositionChooseApp";
-export * from "./PositionViewApp";
 export * from "./PositionEditApp";
 export * from "./RoleChooseApp";

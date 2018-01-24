@@ -8,9 +8,9 @@
 
 import * as ibas from "ibas/index";
 import { CONSOLE_ID, CONSOLE_NAME, CONSOLE_VERSION, CONFIG_VALUE_ORGANIZATION_WAY } from "../api/index";
-import { OwnershipFunc, OwnershipChooseServiceMapping, OwnershipLinkServiceMapping } from "./ownership/index";
-import { PositionFunc, PositionChooseServiceMapping, PositionLinkServiceMapping, RoleChooseServiceMapping } from "./position/index";
-import { PostFunc, PostChooseServiceMapping, PostLinkServiceMapping } from "./post/index";
+import { OwnershipFunc, OwnershipChooseServiceMapping, } from "./ownership/index";
+import { PositionFunc, PositionChooseServiceMapping, RoleChooseServiceMapping } from "./position/index";
+import { PostFunc, PostChooseServiceMapping, } from "./post/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -35,11 +35,8 @@ export class Console extends ibas.ModuleConsole {
         this.register(new PostFunc());
         // 注册服务应用
         this.register(new OwnershipChooseServiceMapping());
-        this.register(new OwnershipLinkServiceMapping());
         this.register(new PositionChooseServiceMapping());
-        this.register(new PositionLinkServiceMapping());
         this.register(new PostChooseServiceMapping());
-        this.register(new PostLinkServiceMapping());
         if (ibas.strings.equalsIgnoreCase(CONFIG_VALUE_ORGANIZATION_WAY, ibas.config.get(ibas.CONFIG_ITEM_ORGANIZATION_WAY))) {
             // 组织为本模块实现
             this.register(new RoleChooseServiceMapping());

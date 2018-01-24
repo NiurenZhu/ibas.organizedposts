@@ -10,5 +10,4 @@
 export * from "./PostFunc";
 export * from "./PostListApp";
 export * from "./PostChooseApp";
-export * from "./PostViewApp";
 export * from "./PostEditApp";
