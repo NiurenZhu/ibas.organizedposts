@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryOrganizedPosts } from "../../borep/BORepositories";
-import { DataConverter4op } from "../../borep/DataConverters";
+import { DataConverter4OP } from "../../borep/DataConverters";
 import { PositionEditApp } from "./PositionEditApp";
 
 /** 列表应用-职位 */
@@ -183,7 +183,7 @@ export class PositionListApp extends ibas.BOListApplication<IPositionListView, b
         return [
             new ibas.BOListServiceProxy({
                 data: this.view.getSelecteds(),
-                converter: new DataConverter4op()
+                converter: new DataConverter4OP()
             })
         ];
     }

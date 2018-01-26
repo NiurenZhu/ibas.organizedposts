@@ -20,7 +20,7 @@ export class OwnershipChooseView extends ibas.BOChooseView implements IOwnership
         return bo.Ownership;
     }
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
