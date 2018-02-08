@@ -29,18 +29,22 @@ then
   rm -rf ${WORK_FOLDER}/release/
 fi
 mkdir -p ${WORK_FOLDER}/release/
-mvn clean install -f ${WORK_FOLDER} >>$LOGFILE
+if [ -e ${WORK_FOLDER}/pom.xml ]
+then
+  mvn clean install -f ${WORK_FOLDER}/pom.xml >>$LOGFILE
+fi
 
 echo --开始编译[compile_order.txt]内容
 while read line
 do
   if [ -e ${WORK_FOLDER}/${line}/pom.xml ]
   then
-    if [[ ${line} = *.service ]]
+    isService=`echo ${line}|grep '.service'|wc -l`
+    if [ ${isService} != 0 ]
     then
       # 网站，编译war包
       echo --开始编译[${line}]
-      mvn clean package -Dmaven.test.skip=true -f ${WORK_FOLDER}/${line} >>$LOGFILE
+      mvn clean package -Dmaven.test.skip=true -f ${WORK_FOLDER}/${line}/pom.xml >>$LOGFILE
 
       if [ -e ${WORK_FOLDER}/${line}/target/*.war ]
       then
@@ -49,12 +53,12 @@ do
     else
       # 非网站，编译jar包并安装到本地
       echo --开始编译[${line}]+安装
-      mvn clean package install -Dmaven.test.skip=true -f ${WORK_FOLDER}/${line} >>$LOGFILE
-    
+      mvn clean package install -Dmaven.test.skip=true -f ${WORK_FOLDER}/${line}/pom.xml >>$LOGFILE
+
       if [ -e ${WORK_FOLDER}/${line}/target/*.jar ]
       then
         cp -r ${WORK_FOLDER}/${line}/target/*.jar ${WORK_FOLDER}/release >>$LOGFILE
-      fi    
+      fi
     fi
     # 检查编译结果
     if [ -e ${WORK_FOLDER}/release/${line}*.* ]
