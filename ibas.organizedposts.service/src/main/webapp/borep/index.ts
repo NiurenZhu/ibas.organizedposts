@@ -17,10 +17,10 @@
 namespace organizedposts {
     export namespace bo {
         // 注册业务对象仓库到工厂
-        ibas.boFactory.register(BO_REPOSITORY_ORGANIZEDPOSTS, BORepositoryOrganizedPosts);
+        boFactory.register(BO_REPOSITORY_ORGANIZEDPOSTS, BORepositoryOrganizedPosts);
         // 注册业务对象到工厂
-        ibas.boFactory.register(Ownership.BUSINESS_OBJECT_CODE, Ownership);
-        ibas.boFactory.register(Position.BUSINESS_OBJECT_CODE, Position);
-        ibas.boFactory.register(Post.BUSINESS_OBJECT_CODE, Post);
+        boFactory.register(Ownership.BUSINESS_OBJECT_CODE, Ownership);
+        boFactory.register(Position.BUSINESS_OBJECT_CODE, Position);
+        boFactory.register(Post.BUSINESS_OBJECT_CODE, Post);
     }
 }
