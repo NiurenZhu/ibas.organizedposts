@@ -2,7 +2,6 @@ package org.colorcoding.ibas.organizedposts.test.bo;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.organizedposts.bo.post.IPost;
 import org.colorcoding.ibas.organizedposts.bo.post.Post;
 import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts;
 import org.colorcoding.ibas.organizedposts.repository.IBORepositoryOrganizedPostsApp;
@@ -28,10 +27,6 @@ public class testPost extends TestCase {
 	 */
 	public void testBasicItems() throws Exception {
 		Post bo = new Post();
-		// 测试属性赋值
-
-		// 测试岗位
-		IPost post = bo.getPosts().create();
 		// 测试属性赋值
 
 		// 测试对象的保存和查询

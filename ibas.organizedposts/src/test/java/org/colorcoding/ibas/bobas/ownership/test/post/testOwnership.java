@@ -27,7 +27,7 @@ import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts
 
 public class testOwnership extends testOrganization {
 
-	public void testOwnership() throws InvalidTokenException {
+	public void testDataShip() throws InvalidTokenException {
 		try {
 			IOperationResult<?> operationResult = null;
 			ICriteria criteria = null;

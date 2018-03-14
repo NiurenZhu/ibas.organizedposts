@@ -2,7 +2,6 @@ package org.colorcoding.ibas.organizedposts.test.bo;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.organizedposts.bo.ownership.IOwnershipItem;
 import org.colorcoding.ibas.organizedposts.bo.ownership.Ownership;
 import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts;
 import org.colorcoding.ibas.organizedposts.repository.IBORepositoryOrganizedPostsApp;
@@ -28,10 +27,6 @@ public class testOwnership extends TestCase {
 	 */
 	public void testBasicItems() throws Exception {
 		Ownership bo = new Ownership();
-		// 测试属性赋值
-
-		// 测试数据权限项
-		IOwnershipItem ownershipitem = bo.getOwnershipItems().create();
 		// 测试属性赋值
 
 		// 测试对象的保存和查询

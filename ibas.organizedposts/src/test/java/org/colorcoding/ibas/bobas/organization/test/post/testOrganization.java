@@ -1,6 +1,5 @@
 package org.colorcoding.ibas.bobas.organization.test.post;
 
-import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
@@ -24,10 +23,8 @@ public class testOrganization extends TestCase {
 	protected IUser[] users;
 	protected IPosition[] positions;
 
-	public void testOrganization() throws InvalidTokenException {
+	public void testOrganizationManager() throws InvalidTokenException {
 		try {
-			IOperationResult<?> operationResult = null;
-			ICriteria criteria = null;
 			this.initialize();
 			// 开始测试
 			// 多次测试后可清空数据
