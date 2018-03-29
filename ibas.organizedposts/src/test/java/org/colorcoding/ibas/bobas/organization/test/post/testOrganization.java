@@ -235,7 +235,7 @@ public class testOrganization extends TestCase {
 		post19.setUserCode(this.users[19].getCode());
 		// #endregion
 		post.setValidDate(DateTime.getToday());
-		post.setInvalidDate(DateTime.maxValue);
+		post.setInvalidDate(DateTime.MAX_VALUE);
 		operationResult = boRepository.savePost(post);
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
 	}
