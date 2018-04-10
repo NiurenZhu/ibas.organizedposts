@@ -172,15 +172,6 @@ namespace organizedposts {
                     }
                 });
             }
-            /** 获取服务的契约 */
-            protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-                return [
-                    new ibas.BOListServiceProxy({
-                        data: this.view.getSelecteds(),
-                        converter: new bo.DataConverter()
-                    })
-                ];
-            }
         }
         /** 视图-职位 */
         export interface IPositionListView extends ibas.IBOListView {
@@ -190,8 +181,6 @@ namespace organizedposts {
             deleteDataEvent: Function;
             /** 显示数据 */
             showData(datas: bo.Position[]): void;
-            /** 获取选择的数据 */
-            getSelecteds(): bo.Position[];
         }
     }
 }
