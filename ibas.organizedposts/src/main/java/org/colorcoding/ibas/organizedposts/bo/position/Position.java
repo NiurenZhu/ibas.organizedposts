@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
@@ -23,7 +24,7 @@ import org.colorcoding.ibas.organizedposts.MyConfiguration;
 @XmlType(name = Position.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = Position.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(Position.BUSINESS_OBJECT_CODE)
-public class Position extends BusinessObject<Position> implements IPosition {
+public class Position extends BusinessObject<Position> implements IPosition, IBOUserFields {
 
 	/**
 	 * 序列化版本标记
