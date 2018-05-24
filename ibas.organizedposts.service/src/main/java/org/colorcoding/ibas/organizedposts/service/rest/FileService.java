@@ -1,6 +1,6 @@
 package org.colorcoding.ibas.organizedposts.service.rest;
 
-import java.io.InputStream;
+import java.io.File;
 import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,27 +22,34 @@ import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.data.FileData;
 import org.colorcoding.ibas.bobas.repository.FileRepository;
 import org.colorcoding.ibas.bobas.repository.jersey.FileRepositoryService;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.colorcoding.ibas.organizedposts.MyConfiguration;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 @Path("file")
 public class FileService extends FileRepositoryService {
+
+	public final static String WORK_FOLDER = MyConfiguration.getConfigValue(
+			MyConfiguration.CONFIG_ITEM_ORGANIZEDPOSTS_FILE_FOLDER,
+			MyConfiguration.getDataFolder() + File.separator + "organizedposts_files");
+
+	public FileService() {
+		// 设置工作目录
+		this.getRepository().setRepositoryFolder(FileService.WORK_FOLDER);
+	}
 
 	@POST
 	@Path("upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public OperationResult<FileData> upload(@FormDataParam("file") InputStream fileStream,
-			@FormDataParam("file") FormDataContentDisposition fileDisposition, @QueryParam("token") String token) {
-		return super.save(fileStream, fileDisposition, token);
+	public OperationResult<FileData> upload(FormDataMultiPart formData, @QueryParam("token") String token) {
+		return super.save(formData.getField("file"), token);
 	}
 
 	@POST
 	@Path("download")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	public byte[] download(Criteria criteria, @QueryParam("token") String token,
-			@Context HttpServletResponse response) {
+	public void download(Criteria criteria, @QueryParam("token") String token, @Context HttpServletResponse response) {
 		try {
 			// 获取文件
 			IOperationResult<FileData> operationResult = this.fetch(criteria, token);
@@ -51,9 +58,15 @@ public class FileService extends FileRepositoryService {
 			}
 			FileData fileData = operationResult.getResultObjects().firstOrDefault();
 			if (fileData != null) {
+				// 设置文件名
 				response.setHeader("Content-Disposition",
 						String.format("attachment;filename=%s", fileData.getFileName()));
-				return fileData.getFileBytes();
+				// 设置内容类型
+				response.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				// 写入响应输出流
+				OutputStream os = response.getOutputStream();
+				os.write(fileData.getFileBytes());
+				os.flush();
 			} else {
 				// 文件不存在
 				throw new WebApplicationException(404);
