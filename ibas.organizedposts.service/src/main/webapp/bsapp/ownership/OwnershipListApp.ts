@@ -55,6 +55,7 @@ namespace organizedposts {
                     criteria: criteria,
                     onCompleted(opRslt: ibas.IOperationResult<bo.Ownership>): void {
                         try {
+                            that.busy(false);
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
@@ -62,7 +63,6 @@ namespace organizedposts {
                                 that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
                             }
                             that.view.showData(opRslt.resultObjects);
-                            that.busy(false);
                         } catch (error) {
                             that.messages(error);
                         }
