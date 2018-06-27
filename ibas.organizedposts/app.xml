@@ -24,5 +24,7 @@
         <add key="OrganizationWay" value="post" />
         <!-- 配置项目-权限判断方式 -->
         <add key="OwnershipWay" value="post" />
+        <!-- 配置项目-配置方式 -->
+        <add key="ConfigurationWay" value="initial" />
     </appSettings>
 </ns2:configuration>
