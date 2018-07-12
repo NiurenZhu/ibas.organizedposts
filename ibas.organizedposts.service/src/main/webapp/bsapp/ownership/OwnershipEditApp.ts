@@ -178,13 +178,13 @@ namespace organizedposts {
                 }
             }
             /** 添加数据权限项事件 */
-            addOwnershipItem(): void {
+            private addOwnershipItem(): void {
                 this.editData.ownershipItems.create();
                 // 仅显示没有标记删除的
                 this.view.showOwnershipItems(this.editData.ownershipItems.filterDeleted());
             }
             /** 删除数据权限项事件 */
-            removeOwnershipItem(items: bo.OwnershipItem[]): void {
+            private removeOwnershipItem(items: bo.OwnershipItem[]): void {
                 // 非数组，转为数组
                 if (!(items instanceof Array)) {
                     items = [items];
@@ -212,6 +212,10 @@ namespace organizedposts {
                 let that: this = this;
                 ibas.servicesManager.runChooseService<initialfantasy.bo.IUser>({
                     boCode: initialfantasy.bo.BO_CODE_USER,
+                    criteria: [
+                        new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
+                    chooseType: ibas.emChooseType.SINGLE,
                     onCompleted(selecteds: ibas.IList<initialfantasy.bo.IUser>): void {
                         that.editData.userCode = selecteds.firstOrDefault().code;
                     }
@@ -220,8 +224,16 @@ namespace organizedposts {
             /** 选择业务对象标识 */
             private chooseBusinessObject(): void {
                 let that: this = this;
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                criteria.noChilds = true;
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = "Code";
+                condition.value = ".";
+                condition.operation = ibas.emConditionOperation.NOT_CONTAIN;
                 ibas.servicesManager.runChooseService<initialfantasy.bo.IBOInformation>({
                     boCode: initialfantasy.bo.BO_CODE_BOINFORMATION,
+                    criteria: criteria,
+                    chooseType: ibas.emChooseType.SINGLE,
                     onCompleted(selecteds: ibas.IList<initialfantasy.bo.IBOInformation>): void {
                         that.editData.boCode = selecteds.firstOrDefault().code;
                     }

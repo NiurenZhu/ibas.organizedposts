@@ -215,6 +215,9 @@ namespace organizedposts {
                 ibas.servicesManager.runChooseService<initialfantasy.bo.IUser>({
                     boCode: initialfantasy.bo.BO_CODE_USER,
                     chooseType: ibas.emChooseType.SINGLE,
+                    criteria: [
+                        new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<initialfantasy.bo.IUser>): void {
                         item.userCode = selecteds.firstOrDefault().code;
                         that.view.refreshViewModel();
@@ -230,6 +233,9 @@ namespace organizedposts {
                 ibas.servicesManager.runChooseService<bo.Position>({
                     boCode: bo.BO_CODE_POSITION,
                     chooseType: ibas.emChooseType.SINGLE,
+                    criteria: [
+                        new ibas.Condition(bo.Position.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.Position>): void {
                         item.position = selecteds.firstOrDefault().code;
                         that.view.refreshViewModel();
