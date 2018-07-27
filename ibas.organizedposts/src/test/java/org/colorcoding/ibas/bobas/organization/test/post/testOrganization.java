@@ -28,7 +28,7 @@ public class testOrganization extends TestCase {
 			this.initialize();
 			// 开始测试
 			// 多次测试后可清空数据
-			// DELETE FROM "CC_OP_POST" WHERE "PostCode" like 'PT%';
+			// DELETE FROM "CC_OP_POST" WHERE "Code" like 'PT%';
 			// DELETE FROM "CC_OP_PSTN" WHERE "Code" like 'PS%';
 			// DELETE FROM "CC_SYS_USER" WHERE "Code" like 'UR%';
 			OrganizationManager orgManager = (OrganizationManager) OrganizationFactory.create().createManager();
@@ -109,128 +109,128 @@ public class testOrganization extends TestCase {
 		// #region 公司
 		IPost post = new Post();
 		post.setBelonging(-1);
-		post.setPostCode(String.format("PT%06d", tmpCode + 0));
-		post.setPostName("老板");
+		post.setCode(String.format("PT%06d", tmpCode + 0));
+		post.setName("老板");
 		post.setPosition(this.positions[0].getCode()); // CEO
 		post.setUserCode(this.users[0].getCode());
 		// #endregion
 		// #region ****财务部
 		IPost post1 = post.getPosts().create();
-		post1.setPostCode(String.format("PT%06d", tmpCode + 1));
-		post1.setPostName("财务经理");
+		post1.setCode(String.format("PT%06d", tmpCode + 1));
+		post1.setName("财务经理");
 		post1.setPosition(this.positions[1].getCode()); // 经理
 		post1.setUserCode(this.users[1].getCode());
 
 		IPost post2 = post1.getPosts().create();
-		post2.setPostCode(String.format("PT%06d", tmpCode + 2));
-		post2.setPostName("会计-工资核算");
+		post2.setCode(String.format("PT%06d", tmpCode + 2));
+		post2.setName("会计-工资核算");
 		post2.setPosition(this.positions[2].getCode()); // 会计
 		post2.setUserCode(this.users[2].getCode());
 
 		IPost post3 = post1.getPosts().create();
-		post3.setPostCode(String.format("PT%06d", tmpCode + 3));
-		post3.setPostName("会计-费用报销");
+		post3.setCode(String.format("PT%06d", tmpCode + 3));
+		post3.setName("会计-费用报销");
 		post3.setPosition(this.positions[2].getCode()); // 会计
 		post3.setUserCode(this.users[3].getCode());
 		// #endregion
 		// #region ****人事部
 		IPost post4 = post.getPosts().create();
-		post4.setPostCode(String.format("PT%06d", tmpCode + 4));
-		post4.setPostName("人事经理");
+		post4.setCode(String.format("PT%06d", tmpCode + 4));
+		post4.setName("人事经理");
 		post4.setPosition(this.positions[1].getCode()); // 经理
 		post4.setUserCode(this.users[4].getCode());
 
 		IPost post5 = post4.getPosts().create();
-		post5.setPostCode(String.format("PT%06d", tmpCode + 5));
-		post5.setPostName("人事-招聘");
+		post5.setCode(String.format("PT%06d", tmpCode + 5));
+		post5.setName("人事-招聘");
 		post5.setPosition(this.positions[3].getCode()); // 人事专员
 		post5.setUserCode(this.users[5].getCode());
 
 		IPost post6 = post4.getPosts().create();
-		post6.setPostCode(String.format("PT%06d", tmpCode + 6));
-		post6.setPostName("人事-前台");
+		post6.setCode(String.format("PT%06d", tmpCode + 6));
+		post6.setName("人事-前台");
 		post6.setPosition(this.positions[3].getCode()); // 人事专员
 		post6.setUserCode(this.users[6].getCode());
 
 		IPost post7 = post4.getPosts().create();
-		post7.setPostCode(String.format("PT%06d", tmpCode + 7));
-		post7.setPostName("行政助理");
+		post7.setCode(String.format("PT%06d", tmpCode + 7));
+		post7.setName("行政助理");
 		post7.setPosition(this.positions[4].getCode()); // 行政助理
 		post7.setUserCode(this.users[7].getCode());
 		// #endregion
 		// #region ****思博分公司
 		IPost post8 = post.getPosts().create();
-		post8.setPostCode(String.format("PT%06d", tmpCode + 8));
-		post8.setPostName("思博总经理");
+		post8.setCode(String.format("PT%06d", tmpCode + 8));
+		post8.setName("思博总经理");
 		post8.setPosition(this.positions[5].getCode()); // 思博总经理
 		post8.setUserCode(this.users[8].getCode());
 		// #endregion
 		// #region ********阿米巴团队01
 		IPost post9 = post8.getPosts().create();
-		post9.setPostCode(String.format("PT%06d", tmpCode + 9));
-		post9.setPostName("阿米巴01负责人");
+		post9.setCode(String.format("PT%06d", tmpCode + 9));
+		post9.setName("阿米巴01负责人");
 		post9.setPosition(this.positions[6].getCode()); // 团队负责人
 		post9.setUserCode(this.users[9].getCode());
 
 		IPost post10 = post9.getPosts().create();
-		post10.setPostCode(String.format("PT%06d", tmpCode + 10));
-		post10.setPostName("开发工程师-前端");
+		post10.setCode(String.format("PT%06d", tmpCode + 10));
+		post10.setName("开发工程师-前端");
 		post10.setPosition(this.positions[7].getCode()); // 开发工程师
 		post10.setUserCode(this.users[10].getCode());
 
 		IPost post11 = post9.getPosts().create();
-		post11.setPostCode(String.format("PT%06d", tmpCode + 11));
-		post11.setPostName("开发工程师-.Net");
+		post11.setCode(String.format("PT%06d", tmpCode + 11));
+		post11.setName("开发工程师-.Net");
 		post11.setPosition(this.positions[7].getCode()); // 开发工程师
 		post11.setUserCode(this.users[11].getCode());
 
 		IPost post12 = post9.getPosts().create();
-		post12.setPostCode(String.format("PT%06d", tmpCode + 12));
-		post12.setPostName("开发工程师-.Net");
+		post12.setCode(String.format("PT%06d", tmpCode + 12));
+		post12.setName("开发工程师-.Net");
 		post12.setPosition(this.positions[7].getCode()); // 开发工程师
 		post12.setUserCode(this.users[12].getCode());
 		// #endregion
 		// #region ********阿米巴团队02
 		IPost post13 = post8.getPosts().create();
-		post13.setPostCode(String.format("PT%06d", tmpCode + 13));
-		post13.setPostName("阿米巴02负责人");
+		post13.setCode(String.format("PT%06d", tmpCode + 13));
+		post13.setName("阿米巴02负责人");
 		post13.setPosition(this.positions[6].getCode()); // 团队负责人
 		post13.setUserCode(this.users[13].getCode());
 
 		IPost post14 = post13.getPosts().create();
-		post14.setPostCode(String.format("PT%06d", tmpCode + 14));
-		post14.setPostName("开发工程师-前端");
+		post14.setCode(String.format("PT%06d", tmpCode + 14));
+		post14.setName("开发工程师-前端");
 		post14.setPosition(this.positions[7].getCode()); // 开发工程师
 		post14.setUserCode(this.users[10].getCode()); // 两个团队共用一个开发工程师-前端
 
 		IPost post15 = post13.getPosts().create();
-		post15.setPostCode(String.format("PT%06d", tmpCode + 15));
-		post15.setPostName("开发工程师-Java");
+		post15.setCode(String.format("PT%06d", tmpCode + 15));
+		post15.setName("开发工程师-Java");
 		post15.setPosition(this.positions[7].getCode()); // 开发工程师
 		post15.setUserCode(this.users[15].getCode());
 
 		IPost post16 = post13.getPosts().create();
-		post16.setPostCode(String.format("PT%06d", tmpCode + 16));
-		post16.setPostName("开发工程师-Java");
+		post16.setCode(String.format("PT%06d", tmpCode + 16));
+		post16.setName("开发工程师-Java");
 		post16.setPosition(this.positions[7].getCode()); // 开发工程师
 		post16.setUserCode(this.users[16].getCode());
 		// #endregion
 		// #region ********阿米巴团队03
 		IPost post17 = post8.getPosts().create();
-		post17.setPostCode(String.format("PT%06d", tmpCode + 17));
-		post17.setPostName("阿米巴03负责人");
+		post17.setCode(String.format("PT%06d", tmpCode + 17));
+		post17.setName("阿米巴03负责人");
 		post17.setPosition(this.positions[6].getCode()); // 团队负责人
 		post17.setUserCode(this.users[17].getCode());
 
 		IPost post18 = post17.getPosts().create();
-		post18.setPostCode(String.format("PT%06d", tmpCode + 18));
-		post18.setPostName("实施顾问");
+		post18.setCode(String.format("PT%06d", tmpCode + 18));
+		post18.setName("实施顾问");
 		post18.setPosition(this.positions[8].getCode()); // 实施顾问
 		post18.setUserCode(this.users[18].getCode());
 
 		IPost post19 = post17.getPosts().create();
-		post19.setPostCode(String.format("PT%06d", tmpCode + 19));
-		post19.setPostName("实施顾问");
+		post19.setCode(String.format("PT%06d", tmpCode + 19));
+		post19.setName("实施顾问");
 		post19.setPosition(this.positions[8].getCode()); // 实施顾问
 		post19.setUserCode(this.users[19].getCode());
 		// #endregion

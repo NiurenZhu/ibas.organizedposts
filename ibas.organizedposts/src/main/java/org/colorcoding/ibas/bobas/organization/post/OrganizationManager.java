@@ -131,7 +131,7 @@ public class OrganizationManager implements IOrganizationManager {
 			}
 			for (IPost orgItem : operationResult.getResultObjects()) {
 				Organization organization = new Organization();
-				organization.setCode(orgItem.getPostCode());
+				organization.setCode(orgItem.getCode());
 				User manager = this.createUser(orgItem.getUserCode());
 				if (manager != null) {
 					manager.setBelong(orgItem.getPosition());

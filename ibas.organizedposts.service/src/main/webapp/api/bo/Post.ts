@@ -11,11 +11,11 @@ namespace organizedposts {
         /** 岗位 */
         export interface IPost extends ibas.IBOSimple {
 
-            /** 岗位编码 */
-            postCode: string;
+            /** 编码 */
+            code: string;
 
-            /** 岗位名称 */
-            postName: string;
+            /** 名称 */
+            name: string;
 
             /** 上级岗位 */
             belonging: number;

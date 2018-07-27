@@ -2,8 +2,8 @@
 <!DOCTYPE Domain>
 <Domain Name="OrganizedPosts" ShortName="OP">
   <Model Name="Post" Description="岗位" ModelType="Simple" Mapped="${Company}_OP_POST">
-    <Property Name="PostCode" Description="岗位编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="PostCode"/>
-    <Property Name="PostName" Description="岗位名称" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="PostName"/>
+    <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Code"/>
+    <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Name"/>
     <Property Name="Belonging" Description="上级岗位" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Belonging"/>
     <Property Name="Position" Description="职位" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Position"/>
     <Property Name="UserCode" Description="用户" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="UserCode"/>

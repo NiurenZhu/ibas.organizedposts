@@ -18,25 +18,25 @@ namespace organizedposts {
                 super();
             }
             /** 映射的属性名称-岗位编码 */
-            static PROPERTY_POSTCODE_NAME: string = "PostCode";
+            static PROPERTY_CODE_NAME: string = "Code";
             /** 获取-岗位编码 */
-            get postCode(): string {
-                return this.getProperty<string>(Post.PROPERTY_POSTCODE_NAME);
+            get code(): string {
+                return this.getProperty<string>(Post.PROPERTY_CODE_NAME);
             }
             /** 设置-岗位编码 */
-            set postCode(value: string) {
-                this.setProperty(Post.PROPERTY_POSTCODE_NAME, value);
+            set code(value: string) {
+                this.setProperty(Post.PROPERTY_CODE_NAME, value);
             }
 
             /** 映射的属性名称-岗位名称 */
-            static PROPERTY_POSTNAME_NAME: string = "PostName";
+            static PROPERTY_NAME_NAME: string = "Name";
             /** 获取-岗位名称 */
-            get postName(): string {
-                return this.getProperty<string>(Post.PROPERTY_POSTNAME_NAME);
+            get name(): string {
+                return this.getProperty<string>(Post.PROPERTY_NAME_NAME);
             }
             /** 设置-岗位名称 */
-            set postName(value: string) {
-                this.setProperty(Post.PROPERTY_POSTNAME_NAME, value);
+            set name(value: string) {
+                this.setProperty(Post.PROPERTY_NAME_NAME, value);
             }
 
             /** 映射的属性名称-上级岗位 */

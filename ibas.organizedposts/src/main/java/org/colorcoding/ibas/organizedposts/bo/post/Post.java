@@ -52,67 +52,67 @@ public class Post extends BusinessObject<Post> implements IPost, IBOUserFields {
 	public static final String BUSINESS_OBJECT_NAME = "Post";
 
 	/**
-	 * 属性名称-岗位编码
+	 * 属性名称-编码
 	 */
-	private static final String PROPERTY_POSTCODE_NAME = "PostCode";
+	private static final String PROPERTY_CODE_NAME = "Code";
 
 	/**
-	 * 岗位编码 属性
+	 * 编码 属性
 	 */
-	@DbField(name = "PostCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_POSTCODE = registerProperty(PROPERTY_POSTCODE_NAME, String.class,
+	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
 	/**
-	 * 获取-岗位编码
-	 *
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_POSTCODE_NAME)
-	public final String getPostCode() {
-		return this.getProperty(PROPERTY_POSTCODE);
-	}
-
-	/**
-	 * 设置-岗位编码
-	 *
-	 * @param value
-	 *            值
-	 */
-	public final void setPostCode(String value) {
-		this.setProperty(PROPERTY_POSTCODE, value);
-	}
-
-	/**
-	 * 属性名称-岗位名称
-	 */
-	private static final String PROPERTY_POSTNAME_NAME = "PostName";
-
-	/**
-	 * 岗位名称 属性
-	 */
-	@DbField(name = "PostName", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_POSTNAME = registerProperty(PROPERTY_POSTNAME_NAME, String.class,
-			MY_CLASS);
-
-	/**
-	 * 获取-岗位名称
+	 * 获取-编码
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_POSTNAME_NAME)
-	public final String getPostName() {
-		return this.getProperty(PROPERTY_POSTNAME);
+	@XmlElement(name = PROPERTY_CODE_NAME)
+	public final String getCode() {
+		return this.getProperty(PROPERTY_CODE);
 	}
 
 	/**
-	 * 设置-岗位名称
+	 * 设置-编码
 	 * 
 	 * @param value
 	 *            值
 	 */
-	public final void setPostName(String value) {
-		this.setProperty(PROPERTY_POSTNAME, value);
+	public final void setCode(String value) {
+		this.setProperty(PROPERTY_CODE, value);
+	}
+
+	/**
+	 * 属性名称-名称
+	 */
+	private static final String PROPERTY_NAME_NAME = "Name";
+
+	/**
+	 * 名称 属性
+	 */
+	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-名称
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_NAME_NAME)
+	public final String getName() {
+		return this.getProperty(PROPERTY_NAME);
+	}
+
+	/**
+	 * 设置-名称
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setName(String value) {
+		this.setProperty(PROPERTY_NAME, value);
 	}
 
 	/**

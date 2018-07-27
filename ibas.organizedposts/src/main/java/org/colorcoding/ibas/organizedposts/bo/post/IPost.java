@@ -9,34 +9,34 @@ import org.colorcoding.ibas.bobas.data.DateTime;
  */
 public interface IPost extends IBOSimple {
 	/**
-	 * 获取-岗位编码
-	 *
-	 * @return 值
-	 */
-	String getPostCode();
-
-	/**
-	 * 设置-岗位编码
-	 *
-	 * @param value
-	 *            值
-	 */
-	void setPostCode(String value);
-
-	/**
-	 * 获取-岗位名称
+	 * 获取-编码
 	 * 
 	 * @return 值
 	 */
-	String getPostName();
+	String getCode();
 
 	/**
-	 * 设置-岗位名称
+	 * 设置-编码
 	 * 
 	 * @param value
 	 *            值
 	 */
-	void setPostName(String value);
+	void setCode(String value);
+
+	/**
+	 * 获取-名称
+	 * 
+	 * @return 值
+	 */
+	String getName();
+
+	/**
+	 * 设置-名称
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setName(String value);
 
 	/**
 	 * 获取-上级岗位

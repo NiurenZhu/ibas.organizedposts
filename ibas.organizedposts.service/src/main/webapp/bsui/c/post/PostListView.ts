@@ -40,19 +40,19 @@ namespace organizedposts {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_post_postcode"),
+                                label: ibas.i18n.prop("bo_post_code"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "postCode"
+                                    path: "code"
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_post_postname"),
+                                label: ibas.i18n.prop("bo_post_name"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "postName"
+                                    path: "name"
                                 })
                             }),
                             new sap.ui.table.Column("", {

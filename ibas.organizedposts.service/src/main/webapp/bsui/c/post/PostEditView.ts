@@ -114,13 +114,13 @@ namespace organizedposts {
                         }),
                         columns: [
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_post_postcode"),
+                                label: ibas.i18n.prop("bo_post_code"),
                                 template: new sap.m.Input("", {
                                     width: "100%",
                                     value: {
-                                        path: "postCode",
+                                        path: "code",
                                         type: new openui5.datatype.Alphanumeric({
-                                            description: ibas.i18n.prop("bo_post_postcode"),
+                                            description: ibas.i18n.prop("bo_post_code"),
                                             notEmpty: true,
                                             maxLength: 8
                                         })
@@ -128,11 +128,11 @@ namespace organizedposts {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_post_postname"),
+                                label: ibas.i18n.prop("bo_post_name"),
                                 template: new sap.m.Input("", {
                                     width: "100%",
                                     value: {
-                                        path: "postName"
+                                        path: "name"
                                     },
                                 })
                             }),

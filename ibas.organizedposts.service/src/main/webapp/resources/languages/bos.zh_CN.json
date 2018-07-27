@@ -64,8 +64,8 @@
     },
     {
         "bo_post": "岗位",
-        "bo_post_postcode": "岗位编码",
-        "bo_post_postname": "岗位名称",
+        "bo_post_code": "编码",
+        "bo_post_name": "名称",
         "bo_post_belonging": "上级岗位",
         "bo_post_position": "职位",
         "bo_post_usercode": "用户",
