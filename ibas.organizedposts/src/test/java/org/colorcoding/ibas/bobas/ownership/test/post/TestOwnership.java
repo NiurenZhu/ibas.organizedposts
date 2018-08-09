@@ -11,7 +11,7 @@ import org.colorcoding.ibas.bobas.data.emConditionOperation;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.organization.post.OrganizationManager;
-import org.colorcoding.ibas.bobas.organization.test.post.testOrganization;
+import org.colorcoding.ibas.bobas.organization.test.post.TestOrganization;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
@@ -25,7 +25,7 @@ import org.colorcoding.ibas.organizedposts.bo.ownership.Ownership;
 import org.colorcoding.ibas.organizedposts.data.emOwnershipSign;
 import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts;
 
-public class testOwnership extends testOrganization {
+public class TestOwnership extends TestOrganization {
 
 	public void testDataShip() throws InvalidTokenException {
 		try {

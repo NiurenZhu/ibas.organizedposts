@@ -16,7 +16,7 @@ import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts
 
 import junit.framework.TestCase;
 
-public class testOrganization extends TestCase {
+public class TestOrganization extends TestCase {
 
 	protected BORepositoryOrganizedPosts boRepository;
 	private int tmpCode;
