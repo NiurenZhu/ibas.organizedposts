@@ -1,11 +1,17 @@
 package org.colorcoding.ibas.bobas.organization.post;
 
-import org.colorcoding.ibas.bobas.organization.IUser;
-import org.colorcoding.ibas.initialfantasy.bo.shell.User;
-
-import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+import org.colorcoding.ibas.bobas.organization.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "Organization")
@@ -60,7 +66,7 @@ public class Organization {
 	}
 
 	@XmlElementWrapper(name = "members")
-	@XmlElement(name = "members", type = User.class)
+	@XmlElement(name = "member", type = User.class)
 	private List<IUser> members;
 
 	public List<IUser> getMembers() {

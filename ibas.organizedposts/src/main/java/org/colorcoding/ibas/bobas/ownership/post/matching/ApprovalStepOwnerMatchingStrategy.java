@@ -28,7 +28,8 @@ public class ApprovalStepOwnerMatchingStrategy extends BasisMatchingStrategy {
 			return false;
 		}
 		IApprovalProcessManager apManager = ApprovalFactory.create().createManager();
-		IApprovalProcess approvalProcess = apManager.checkProcess((IApprovalData) bo, this.createRepository());
+		apManager.useRepository(this.createRepository());
+		IApprovalProcess approvalProcess = apManager.checkProcess((IApprovalData) bo);
 		if (approvalProcess != null && !approvalProcess.isNew()) {
 			for (IApprovalProcessStep approvalProcessStep : approvalProcess.getProcessSteps()) {
 				if (approvalProcessStep.getOwner().getId() == user.getId()

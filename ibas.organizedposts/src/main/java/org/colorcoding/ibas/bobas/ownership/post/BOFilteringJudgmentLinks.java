@@ -2,7 +2,7 @@ package org.colorcoding.ibas.bobas.ownership.post;
 
 import org.colorcoding.ibas.bobas.core.fields.IFieldData;
 import org.colorcoding.ibas.bobas.core.fields.IFieldDataDb;
-import org.colorcoding.ibas.bobas.core.fields.IManageFields;
+import org.colorcoding.ibas.bobas.core.fields.IManagedFields;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.expression.*;
@@ -50,7 +50,7 @@ public class BOFilteringJudgmentLinks extends BOJudgmentLink {
 	public IPropertyValueOperator createPropertyValueOperator() {
 		// 使用数据库字段属性比较
 		return new IPropertyValueOperator() {
-			private IManageFields value;
+			private IManagedFields value;
 			private IFieldData field = null;
 
 			private IFieldData getField() {
@@ -73,10 +73,10 @@ public class BOFilteringJudgmentLinks extends BOJudgmentLink {
 
 			@Override
 			public void setValue(Object value) {
-				if (value != null && !(value instanceof IManageFields)) {
+				if (value != null && !(value instanceof IManagedFields)) {
 					throw new JudgmentLinkException(I18N.prop("msg_bobas_invaild_bo_type"));
 				}
-				this.value = (IManageFields) value;
+				this.value = (IManagedFields) value;
 				this.field = null;
 			}
 
