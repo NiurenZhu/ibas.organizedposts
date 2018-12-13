@@ -15,13 +15,12 @@ namespace organizedposts {
             static APPLICATION_NAME: string = "organizedposts_app_role_choose";
             /** 业务对象编码 */
             static BUSINESS_OBJECT_CODE: string = initialfantasy.bo.BO_CODE_ROLE;
-
             /** 构造函数 */
             constructor() {
                 super();
-                this.id = PositionChooseApp.APPLICATION_ID;// 使用职位
+                this.id = PositionChooseApp.APPLICATION_ID;
                 this.name = RoleChooseApp.APPLICATION_NAME;
-                this.boCode = RoleChooseApp.BUSINESS_OBJECT_CODE;
+                this.boCode = PositionChooseApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
         }
@@ -32,7 +31,7 @@ namespace organizedposts {
                 super();
                 this.id = RoleChooseApp.APPLICATION_ID;
                 this.name = RoleChooseApp.APPLICATION_NAME;
-                this.boCode = RoleChooseApp.BUSINESS_OBJECT_CODE;
+                this.boCode = PositionChooseApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
             /** 创建服务并运行 */
