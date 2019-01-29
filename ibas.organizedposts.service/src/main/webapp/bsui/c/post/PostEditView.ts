@@ -70,9 +70,9 @@ namespace organizedposts {
                         selectionMode: sap.ui.table.SelectionMode.Single,
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT, 10),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Fixed,
-                        rowActionTemplate: new sap.ui.table.RowAction({
+                        rowActionTemplate: new sap.ui.table.RowAction("", {
                             items: [
-                                new sap.ui.table.RowActionItem({
+                                new sap.ui.table.RowActionItem("", {
                                     type: "Custom",
                                     icon: "sap-icon://add",
                                     text: ibas.i18n.prop("shell_data_add"),
@@ -82,7 +82,7 @@ namespace organizedposts {
                                             this.getBindingContext().getObject());
                                     },
                                 }),
-                                new sap.ui.table.RowActionItem({
+                                new sap.ui.table.RowActionItem("", {
                                     type: "Custom",
                                     text: ibas.i18n.prop("shell_data_remove"),
                                     icon: "sap-icon://delete",
