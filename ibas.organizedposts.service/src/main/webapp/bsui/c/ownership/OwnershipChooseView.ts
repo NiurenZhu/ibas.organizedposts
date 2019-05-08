@@ -19,67 +19,62 @@ namespace organizedposts {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.table = new sap.ui.table.Table("", {
-                        enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        selectionMode: openui5.utils.toSelectionMode(this.chooseType),
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+                    this.table = new sap.extension.table.DataTable("", {
+                        chooseType: this.chooseType,
+                        visibleRowCount: sap.extension.table.visibleRowCount(15),
+                        dataInfo: this.queryTarget,
                         rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_ownership_objectkey"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "objectKey"
-                                })
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "objectKey",
+                                    type: new sap.extension.data.Numeric()
+                                }),
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_ownership_usercode"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "userCode"
-                                })
+                                template: new sap.extension.m.UserText("", {
+                                    dataInfo: {
+                                        key: "Code",
+                                    },
+                                }).bindProperty("bindingValue", {
+                                    path: "userCode",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_ownership_bocode"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "boCode"
-                                })
+                                template: new sap.extension.m.BusinessObjectText("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "boCode",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
                             }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_ownership_defaultpermission"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "defaultPermission",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emAuthoriseType, data);
-                                    }
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_ownership_activated"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
                                     path: "activated",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emYesNo, data);
-                                    }
-                                })
+                                    type: new sap.extension.data.YesNo(true)
+                                }),
                             }),
-                        ]
-                    });
-                    // 调整选择样式风格
-                    openui5.utils.changeSelectionStyle(this.table, this.chooseType);
-                    // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_ownership_defaultpermission"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "defaultPermission",
+                                    type: new sap.extension.data.AuthoriseType(true)
+                                }),
+                            }),
+                        ],
+                        nextDataSet(event: sap.ui.base.Event): void {
+                            // 查询下一个数据集
+                            let data: any = event.getParameter("data");
+                            if (ibas.objects.isNull(data)) {
+                                return;
+                            }
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -95,10 +90,11 @@ namespace organizedposts {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
-                        stretchOnPhone: true,
                         horizontalScrolling: true,
                         verticalScrolling: true,
-                        content: [this.table],
+                        content: [
+                            this.table
+                        ],
                         buttons: [
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_data_new"),
@@ -112,10 +108,7 @@ namespace organizedposts {
                                 text: ibas.i18n.prop("shell_data_choose"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
-                                    that.fireViewEvents(that.chooseDataEvent,
-                                        // 获取表格选中的对象
-                                        openui5.utils.getSelecteds<bo.Ownership>(that.table)
-                                    );
+                                    that.fireViewEvents(that.chooseDataEvent, that.table.getSelecteds());
                                 }
                             }),
                             new sap.m.Button("", {
@@ -128,25 +121,16 @@ namespace organizedposts {
                         ],
                     });
                 }
-                private table: sap.ui.table.Table;
+                private table: sap.extension.table.Table;
                 /** 显示数据 */
                 showData(datas: bo.Ownership[]): void {
-                    let done: boolean = false;
-                    let model: sap.ui.model.Model = this.table.getModel(undefined);
-                    if (!ibas.objects.isNull(model)) {
-                        // 已存在绑定数据，添加新的
-                        let hDatas: any = (<any>model).getData();
-                        if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
-                            for (let item of datas) {
-                                hDatas.rows.push(item);
-                            }
-                            model.refresh(false);
-                            done = true;
-                        }
-                    }
-                    if (!done) {
-                        // 没有显示数据
-                        this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    let model: sap.ui.model.Model = this.table.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        // 已绑定过数据
+                        model.addData(datas);
+                    } else {
+                        // 未绑定过数据
+                        this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
                     this.table.setBusy(false);
                 }

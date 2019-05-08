@@ -27,112 +27,117 @@ namespace organizedposts {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
-                        editable: true, // 编辑模式影响行高
+                    let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_usercode") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
-                                valueHelpOnly: true,
+                                repository: initialfantasy.bo.BO_REPOSITORY_INITIALFANTASY,
+                                dataInfo: {
+                                    type: ibas.boFactory.classOf(initialfantasy.bo.User.BUSINESS_OBJECT_CODE),
+                                    key: "Code",
+                                    text: "Name"
+                                },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseUserEvent);
                                 }
-                            }).bindProperty("value", {
-                                path: "/userCode"
+                            }).bindProperty("bindingValue", {
+                                path: "userCode",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 8
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_bocode") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
-                                valueHelpOnly: true,
+                                repository: initialfantasy.bo.BO_REPOSITORY_INITIALFANTASY,
+                                dataInfo: {
+                                    type: ibas.boFactory.classOf(initialfantasy.bo.BOInformation.BUSINESS_OBJECT_CODE),
+                                    key: "Code",
+                                    text: "Description"
+                                },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseBusinessObjectEvent);
                                 }
-                            }).bindProperty("value", {
-                                path: "/boCode"
+                            }).bindProperty("bindingValue", {
+                                path: "boCode",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 30
+                                })
                             }),
-
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_defaultpermission") }),
-                            new sap.m.Select("", {
-                                items: openui5.utils.createComboBoxItems(ibas.emAuthoriseType)
-                            }).bindProperty("selectedKey", {
-                                path: "/defaultPermission",
-                                type: "sap.ui.model.type.Integer"
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emAuthoriseType
+                            }).bindProperty("bindingValue", {
+                                path: "defaultPermission",
+                                type: new sap.extension.data.AuthoriseType()
                             }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("organizedposts_title_others") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_objectkey") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/objectKey"
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_objectcode") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/objectCode"
-                            }),
+                            new sap.ui.core.Title("", {}),
                         ]
                     });
-                    this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_ownershipitem") }));
-                    this.tableOwnershipItem = new sap.ui.table.Table("", {
-                        toolbar: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_add"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://add",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.addOwnershipItemEvent);
-                                    }
+                    let formOwnershipItem: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_ownershipitem") }),
+                            this.tableOwnershipItem = new sap.extension.table.DataTable("", {
+                                enableSelectAll: false,
+                                visibleRowCount: sap.extension.table.visibleRowCount(8),
+                                dataInfo: {
+                                    code: bo.Ownership.BUSINESS_OBJECT_CODE,
+                                    name: bo.OwnershipItem.name
+                                },
+                                toolbar: new sap.m.Toolbar("", {
+                                    content: [
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("shell_data_add"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://add",
+                                            press: function (): void {
+                                                that.fireViewEvents(that.addOwnershipItemEvent);
+                                            }
+                                        }),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("shell_data_remove"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://less",
+                                            press: function (): void {
+                                                that.fireViewEvents(that.removeOwnershipItemEvent, that.tableOwnershipItem.getSelecteds());
+                                            }
+                                        })
+                                    ]
                                 }),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_remove"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://less",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.removeOwnershipItemEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.OwnershipItem>(that.tableOwnershipItem)
-                                        );
-                                    }
-                                })
-                            ]
-                        }),
-                        enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
-                        rows: "{/rows}",
-                        columns: [
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_ownershipitem_itemsign"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(bo.emOwnershipSign)
-                                }).bindProperty("selectedKey", {
-                                    path: "itemSign",
-                                    type: "sap.ui.model.type.Integer"
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_ownershipitem_permission"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emAuthoriseType)
-                                }).bindProperty("selectedKey", {
-                                    path: "permission",
-                                    type: "sap.ui.model.type.Integer"
-                                })
-                            }),
-                        ]
+                                rows: "{/rows}",
+                                columns: [
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_ownershipitem_itemsign"),
+                                        template: new sap.extension.m.EnumSelect("", {
+                                            enumType: bo.emOwnershipSign
+                                        }).bindProperty("bindingValue", {
+                                            path: "itemSign",
+                                            type: new sap.extension.data.Enum({
+                                                enumType: bo.emOwnershipSign
+                                            })
+                                        }),
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_ownershipitem_permission"),
+                                        template: new sap.extension.m.EnumSelect("", {
+                                            enumType: ibas.emAuthoriseType
+                                        }).bindProperty("bindingValue", {
+                                            path: "permission",
+                                            type: new sap.extension.data.AuthoriseType()
+                                        }),
+                                    }),
+                                ]
+                            })]
                     });
-                    this.form.addContent(this.tableOwnershipItem);
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
+                        dataInfo: {
+                            code: bo.Ownership.BUSINESS_OBJECT_CODE,
+                        },
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
@@ -180,41 +185,25 @@ namespace organizedposts {
                                 }),
                             ]
                         }),
-                        content: [this.form]
+                        content: [
+                            formTop,
+                            formOwnershipItem,
+                        ]
                     });
-                    this.id = this.page.getId();
-                    return this.page;
                 }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.Ownership): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                }
-                private tableOwnershipItem: sap.ui.table.Table;
+
+                private page: sap.extension.m.Page;
+                private tableOwnershipItem: sap.extension.table.Table;
 
                 /** 显示数据 */
                 showOwnership(data: bo.Ownership): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(data));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.form, data);
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
                 }
-                /** 显示数据 */
+                /** 显示数据-数据权限项 */
                 showOwnershipItems(datas: bo.OwnershipItem[]): void {
-                    this.tableOwnershipItem.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.tableOwnershipItem, datas);
+                    this.tableOwnershipItem.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }
         }

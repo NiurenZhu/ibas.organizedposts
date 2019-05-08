@@ -87,13 +87,13 @@
         "bo_post_closing_delimiter": "----结束----"
     },
     {
-        "em_approval": "审批",
-        "em_equallevel": "同级",
-        "em_higherlevel": "上级",
-        "em_lowerlevel": "下级",
-        "em_others": "其他",
-        "em_project": "项目",
-        "em_self": "自身",
-        "em_teams": "团队"
+        "em_ownershipsign_approval": "审批",
+        "em_ownershipsign_equallevel": "同级",
+        "em_ownershipsign_higherlevel": "上级",
+        "em_ownershipsign_lowerlevel": "下级",
+        "em_ownershipsign_others": "其他",
+        "em_ownershipsign_project": "项目",
+        "em_ownershipsign_self": "自身",
+        "em_ownershipsign_teams": "团队"
     }
 ]
