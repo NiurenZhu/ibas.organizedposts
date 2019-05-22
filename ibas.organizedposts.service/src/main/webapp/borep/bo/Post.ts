@@ -286,8 +286,8 @@ namespace organizedposts {
                     }
                 }
             }
-            protected onChildPropertyChanged(item: Post, name: string): void {
-                super.onChildPropertyChanged(item, name);
+            protected onItemPropertyChanged(item: Post, name: string): void {
+                super.onItemPropertyChanged(item, name);
             }
             /**
              * 添加项目后
