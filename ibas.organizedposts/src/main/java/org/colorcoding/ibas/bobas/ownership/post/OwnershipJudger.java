@@ -16,6 +16,7 @@ import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.expression.JudmentOperationException;
 import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.message.MessageLevel;
 import org.colorcoding.ibas.bobas.organization.IUser;
@@ -180,13 +181,13 @@ public class OwnershipJudger implements IOwnershipJudger {
 			}
 			IBORepositoryOrganizedPostsApp boRepository = this.createRepository();
 			IOperationResult<?> operationResult = boRepository.fetchBOFiltering(criteria);
-			for (IBOFiltering filtering : operationResult.getResultObjects().toArray(new IBOFiltering[]{})) {
+			for (IBOFiltering filtering : operationResult.getResultObjects().toArray(new IBOFiltering[] {})) {
 				String key = String.format("%s/%s", filtering.getBOCode(), filtering.getRoleCode());
 				boFilterings.put(key, filtering);// 缓存数据
 				filterings.add(filtering);// 返回数据
 			}
 		}
-		return filterings.toArray(new IBOFiltering[]{});
+		return filterings.toArray(new IBOFiltering[] {});
 	}
 
 	/**
@@ -428,5 +429,10 @@ public class OwnershipJudger implements IOwnershipJudger {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public ICriteria filterCriteria(BusinessObjectUnit boUnit, IUser user) {
+		return null;
 	}
 }

@@ -11,7 +11,7 @@ import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.mapping.BOCode;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.organizedposts.MyConfiguration;
@@ -23,7 +23,7 @@ import org.colorcoding.ibas.organizedposts.MyConfiguration;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = Post.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = Post.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-@BOCode(Post.BUSINESS_OBJECT_CODE)
+@BusinessObjectUnit(code = Post.BUSINESS_OBJECT_CODE)
 public class Post extends BusinessObject<Post> implements IPost, IBOUserFields {
 
 	/**
