@@ -279,7 +279,8 @@ public class OwnershipJudger implements IOwnershipJudger {
 	public boolean canRead(IDataOwnership bo, IUser user, boolean throwError) throws UnauthorizedException {
 		boolean status = this.canRead(bo, user);
 		if (throwError && !status) {
-			throw new UnauthorizedException();
+			throw new UnauthorizedException(
+					I18N.prop("msg_op_to_fetch_bo_unauthorized", bo.getClass().getSimpleName()));
 		}
 		return status;
 	}
@@ -302,7 +303,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 	public boolean canSave(IDataOwnership bo, IUser user, boolean throwError) throws UnauthorizedException {
 		boolean status = this.canSave(bo, user);
 		if (throwError && !status) {
-			throw new UnauthorizedException(I18N.prop("msg_bobas_to_save_bo_unauthorized"));
+			throw new UnauthorizedException(I18N.prop("msg_op_to_save_bo_unauthorized", bo.getClass().getSimpleName()));
 		}
 		return status;
 	}
