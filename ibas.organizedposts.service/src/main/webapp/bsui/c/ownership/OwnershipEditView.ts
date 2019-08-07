@@ -34,11 +34,11 @@ namespace organizedposts {
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_usercode") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
-                                repository: initialfantasy.bo.BO_REPOSITORY_INITIALFANTASY,
+                                repository: initialfantasy.bo.BORepositoryInitialFantasy,
                                 dataInfo: {
-                                    type: ibas.boFactory.classOf(initialfantasy.bo.User.BUSINESS_OBJECT_CODE),
-                                    key: "Code",
-                                    text: "Name"
+                                    type: initialfantasy.bo.User,
+                                    key:initialfantasy.bo.User.PROPERTY_CODE_NAME,
+                                    text:initialfantasy.bo.User.PROPERTY_NAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseUserEvent);
@@ -52,11 +52,11 @@ namespace organizedposts {
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_bocode") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
-                                repository: initialfantasy.bo.BO_REPOSITORY_INITIALFANTASY,
+                                repository: initialfantasy.bo.BORepositoryInitialFantasy,
                                 dataInfo: {
-                                    type: ibas.boFactory.classOf(initialfantasy.bo.BOInformation.BUSINESS_OBJECT_CODE),
-                                    key: "Code",
-                                    text: "Description"
+                                    type: initialfantasy.bo.BOInformation ,
+                                    key:  initialfantasy.bo.BOInformation.PROPERTY_CODE_NAME,
+                                    text: initialfantasy.bo.BOInformation.PROPERTY_DESCRIPTION_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseBusinessObjectEvent);

@@ -1,6 +1,29 @@
 package org.colorcoding.ibas.bobas.organization.post;
 
-import org.colorcoding.ibas.bobas.common.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+import org.colorcoding.ibas.bobas.common.ConditionOperation;
+import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.ICondition;
+import org.colorcoding.ibas.bobas.common.ICriteria;
+import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.message.Logger;
@@ -14,19 +37,6 @@ import org.colorcoding.ibas.organizedposts.bo.post.IPost;
 import org.colorcoding.ibas.organizedposts.bo.post.Post;
 import org.colorcoding.ibas.organizedposts.repository.BORepositoryOrganizedPosts;
 import org.colorcoding.ibas.organizedposts.repository.IBORepositoryOrganizedPostsApp;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "OrganizationManager")
@@ -56,10 +66,9 @@ public class OrganizationManager implements IOrganizationManager {
 					MyConfiguration.isDebugMode() ? 180 : 600);
 			if ((nowTime - fileTime) <= (freshTime * 1000)) {
 				// 缓存文件有效期内
-				try {
+				try (FileInputStream fileStream = new FileInputStream(file)) {
 					context = JAXBContext.newInstance(OrganizationManager.class);
 					Unmarshaller unmarshaller = context.createUnmarshaller();
-					FileInputStream fileStream = new FileInputStream(file);
 					OrganizationManager manager = (OrganizationManager) unmarshaller.unmarshal(fileStream);
 					this.organizations = manager.organizations;
 					this.undistributedUsers = manager.undistributedUsers;
@@ -73,7 +82,7 @@ public class OrganizationManager implements IOrganizationManager {
 		}
 		this.undistributedUsers = this.loadUsers();// 初始化未分配组织的用户(加载所有用户)
 		List<Organization> organizations = this.load(-1);// 加载根
-		this.organizations = organizations.toArray(new Organization[]{});
+		this.organizations = organizations.toArray(new Organization[] {});
 		// 移除已分配组织的用户
 		for (IUser user : this.getUsers()) {
 			this.getUndistributedUsers().removeIf(new Predicate<IUser>() {
@@ -95,10 +104,10 @@ public class OrganizationManager implements IOrganizationManager {
 			context = JAXBContext.newInstance(OrganizationManager.class);
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
-			FileOutputStream out = new FileOutputStream(file, false);
-			marshaller.marshal(this, out);
-			out.flush();
-			out.close();
+			try (FileOutputStream out = new FileOutputStream(file, false)) {
+				marshaller.marshal(this, out);
+				out.flush();
+			}
 			Logger.log(String.format("organization: cache data in file, [%s].", file.getPath()));
 		} catch (JAXBException | IOException e) {
 			Logger.log(e);
@@ -121,8 +130,7 @@ public class OrganizationManager implements IOrganizationManager {
 			condition.setOperation(ConditionOperation.GRATER_EQUAL);
 			condition.setValue(DateTime.getToday());
 			IBORepositoryOrganizedPostsApp boRepository = this.createRepository();
-			IOperationResult<IPost> operationResult = boRepository
-					.fetchPost(criteria);
+			IOperationResult<IPost> operationResult = boRepository.fetchPost(criteria);
 			if (operationResult.getError() != null) {
 				throw operationResult.getError();
 			}
@@ -246,7 +254,7 @@ public class OrganizationManager implements IOrganizationManager {
 				roles.add(item.getBelong());
 			}
 		}
-		return roles.toArray(new String[]{});
+		return roles.toArray(new String[] {});
 	}
 
 	protected String getCacheFilePath() {
@@ -329,7 +337,7 @@ public class OrganizationManager implements IOrganizationManager {
 	 */
 	protected Organization[] getOrganizations(boolean flat) {
 		if (this.organizations == null) {
-			return new Organization[]{};
+			return new Organization[] {};
 		}
 		if (!flat) {
 			return this.organizations;
@@ -338,7 +346,7 @@ public class OrganizationManager implements IOrganizationManager {
 		for (Organization org : this.organizations) {
 			orgs.addAll(this.getOrganizations(org));
 		}
-		return orgs.toArray(new Organization[]{});
+		return orgs.toArray(new Organization[] {});
 	}
 
 	protected List<Organization> getOrganizations(Organization organization) {
@@ -369,7 +377,7 @@ public class OrganizationManager implements IOrganizationManager {
 				}
 			}
 		}
-		return orgs.toArray(new Organization[]{});
+		return orgs.toArray(new Organization[] {});
 	}
 
 	private List<IUser> getUsers(Organization organization) {
@@ -387,7 +395,7 @@ public class OrganizationManager implements IOrganizationManager {
 		for (Organization org : this.getOrganizations(false)) {
 			users.addAll(this.getUsers(org));
 		}
-		return users.toArray(new IUser[]{});
+		return users.toArray(new IUser[] {});
 	}
 
 	/**
@@ -398,13 +406,14 @@ public class OrganizationManager implements IOrganizationManager {
 	 * @param user
 	 * @param someone
 	 * @return 所属组织的manager即为领导，若本身为manager，则上级组织的manager为领导。所属同一组织且同角色即为同事， 领导没有同事
-	 * 作为manager所属组织中的成员即为下属，而自身为上级组织manager的下属。
+	 *         作为manager所属组织中的成员即为下属，而自身为上级组织manager的下属。
 	 */
 	public OrganizationalRelationship getRelationship(IUser user, IUser someone) {
 		if (user == null || someone == null) {
 			return OrganizationalRelationship.NONE;
 		}
-		if (user.getId() == OrganizationFactory.UNKNOWN_USER.getId() || someone.getId() == OrganizationFactory.UNKNOWN_USER.getId()) {
+		if (user.getId() == OrganizationFactory.UNKNOWN_USER.getId()
+				|| someone.getId() == OrganizationFactory.UNKNOWN_USER.getId()) {
 			return OrganizationalRelationship.NONE;
 		}
 		// 获取组织
